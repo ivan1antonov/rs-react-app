@@ -3,15 +3,7 @@ import Header from './components/Header';
 import Content from './components/Content';
 import ErrorBundary from './components/ErrorBundary';
 import React from 'react';
-
-interface resultsType {
-  name: string;
-  text: string;
-}
-
-interface ContentBoxProps {
-  data: resultsType[];
-}
+import type { ContentBoxProps } from './types/types';
 
 export default class App extends React.Component<ContentBoxProps> {
   render() {

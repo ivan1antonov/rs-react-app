@@ -1,14 +1,6 @@
 import React from 'react';
 import ContentBox from './ContentBox';
-
-interface resultsType {
-  name: string;
-  text: string;
-}
-
-interface ContentBoxProps {
-  data: resultsType[];
-}
+import type { ContentBoxProps } from '../types/types';
 
 export default class Content extends React.Component<ContentBoxProps> {
   render() {
