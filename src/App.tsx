@@ -1,11 +1,25 @@
 import './App.css';
+import Header from './components/Header';
+import Content from './components/Content';
+import ErrorBundary from './components/ErrorBundary';
+import React from 'react';
 
-function App() {
-  return (
-    <>
-      <h1>Vite + React</h1>
-    </>
-  );
+interface resultsType {
+  name: string;
+  text: string;
 }
 
-export default App;
+interface ContentBoxProps {
+  data: resultsType[];
+}
+
+export default class App extends React.Component<ContentBoxProps> {
+  render() {
+    return (
+      <ErrorBundary>
+        <Header />
+        <Content data={this.props.data} />
+      </ErrorBundary>
+    );
+  }
+}
