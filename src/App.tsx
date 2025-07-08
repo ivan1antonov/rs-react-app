@@ -4,28 +4,10 @@ import Header from './components/Header';
 import Content from './components/Content';
 import ErrorBundary from './components/ErrorBundary';
 import { getResults } from './services/services.tsx';
-import type { resultsType } from './types/types.tsx';
+import type { resultsType, AppState, InputData } from './types/types.tsx';
 
-interface AppState {
-  data: resultsType[];
-}
-
-interface Responce {
-  name: string;
-  height: string;
-  mass: string;
-  hair_color: string;
-  skin_color: string;
-  eye_color: string;
-  birth_year: string;
-}
-
-interface InputData {
-  results: Responce[];
-}
-
-export default class App extends React.Component<undefined, AppState> {
-  constructor(props: undefined) {
+export default class App extends React.Component<object, AppState> {
+  constructor(props: object) {
     super(props);
     this.state = { data: [] };
   }
