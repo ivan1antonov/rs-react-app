@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface ButtonProps {
-  onClick?: () => void;
-  text?: string;
+  onClick: () => void;
+  text: string;
 }
 
 export default class Button extends React.Component<ButtonProps> {

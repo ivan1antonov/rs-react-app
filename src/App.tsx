@@ -9,7 +9,7 @@ import type { resultsType, AppState, InputData } from './types/types.tsx';
 export default class App extends React.Component<object, AppState> {
   constructor(props: object) {
     super(props);
-    this.state = { data: [] };
+    this.state = { data: [], inputValue: '' };
   }
   getData(response: InputData): void {
     const results: resultsType[] = response.results.map((item) => ({
@@ -19,17 +19,29 @@ export default class App extends React.Component<object, AppState> {
     this.setState({ data: results });
   }
   async componentDidMount() {
-    const response = await getResults('page=1');
+    const response = await getResults('');
     this.getData(response);
   }
   async getNewData(value: string) {
     const response = await getResults(value);
     this.getData(response);
   }
+  newValue(value: string) {
+    this.setState({ inputValue: value });
+  }
+  onSearch() {
+    this.getNewData(this.state.inputValue);
+    this.setState({ inputValue: '' });
+  }
+
   render() {
     return (
       <ErrorBundary>
-        <Header />
+        <Header
+          value={this.state.inputValue}
+          newValue={this.newValue.bind(this)}
+          onSearch={this.onSearch.bind(this)}
+        />
         <Content data={this.state.data} />
       </ErrorBundary>
     );

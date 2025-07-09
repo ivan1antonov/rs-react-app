@@ -8,7 +8,7 @@ const api = {
 };
 
 export async function getResults(query: string) {
-  const response = await fetch(api.people + `?${query}`);
+  const response = await fetch(api.people + `?search=${query}`);
   const data = response.json();
   return data;
 }

@@ -9,6 +9,7 @@ export interface ContentBoxProps {
 
 export interface AppState {
   data: resultsType[];
+  inputValue: string;
 }
 
 export interface Responce {

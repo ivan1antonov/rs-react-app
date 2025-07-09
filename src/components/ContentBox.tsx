@@ -6,8 +6,8 @@ export default class ContentBox extends React.Component<ContentBoxProps> {
     return (
       <>
         <div className="title">
-          <div className="title_name">Имя</div>
-          <div className="title_text">Описание</div>
+          <div className="title_name">Name</div>
+          <div className="title_text">Description</div>
         </div>
         <div className="content">
           {this.props.data.map((el) => (

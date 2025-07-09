@@ -2,13 +2,25 @@ import React from 'react';
 import Button from './Button';
 import Input from './Input';
 
-export default class Header extends React.Component {
+interface HeaderProps {
+  newValue: (value: string) => void;
+  onSearch: () => void;
+  value: string;
+}
+
+export default class Header extends React.Component<HeaderProps> {
   render() {
     return (
       <>
         <header className="header">
-          <Input />
-          <Button />;
+          <Input
+            type="text"
+            value={this.props.value}
+            newValue={this.props.newValue}
+            onEnter={this.props.onSearch}
+            placeholder="Do you want write something?"
+          />
+          <Button text=" " onClick={this.props.onSearch} />;
         </header>
       </>
     );
