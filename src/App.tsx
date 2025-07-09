@@ -30,7 +30,11 @@ export default class App extends React.Component<object, AppState> {
     this.setState({ inputValue: value });
   }
   onSearch() {
+    if (localStorage.getItem('results') === this.state.inputValue.trim()) {
+      return;
+    }
     this.getNewData(this.state.inputValue.trim());
+    this.setState({ inputValue: '' });
   }
 
   render() {
