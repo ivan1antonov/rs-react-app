@@ -18,9 +18,9 @@ export default class Header extends React.Component<HeaderProps> {
             value={this.props.value}
             newValue={this.props.newValue}
             onEnter={this.props.onSearch}
-            placeholder="Do you want write something?"
+            placeholder="Do you want find anyone?"
           />
-          <Button text=" " onClick={this.props.onSearch} />;
+          <Button text="Search" onClick={this.props.onSearch} />
         </header>
       </>
     );

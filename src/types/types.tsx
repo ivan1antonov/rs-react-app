@@ -16,6 +16,7 @@ export interface Responce {
   name: string;
   height: string;
   mass: string;
+  gender: string;
   hair_color: string;
   skin_color: string;
   eye_color: string;
@@ -24,4 +25,22 @@ export interface Responce {
 
 export interface InputData {
   results: Responce[];
+}
+
+export interface Person {
+  name: string;
+  height: string;
+  mass: string;
+  hair_color: string;
+  skin_color: string;
+  eye_color: string;
+  birth_year: string;
+  gender: string;
+}
+
+export interface ApiResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Person[];
 }

@@ -4,17 +4,17 @@ import Header from './components/Header';
 import Content from './components/Content';
 import ErrorBundary from './components/ErrorBundary';
 import { getResults } from './services/services.tsx';
-import type { resultsType, AppState, InputData } from './types/types.tsx';
+import type { resultsType, AppState, ApiResponse } from './types/types.tsx';
 
 export default class App extends React.Component<object, AppState> {
   constructor(props: object) {
     super(props);
     this.state = { data: [], inputValue: '' };
   }
-  getData(response: InputData): void {
+  getData(response: ApiResponse): void {
     const results: resultsType[] = response.results.map((item) => ({
       name: item.name,
-      text: `Height: ${item.height}, Weight: ${item.mass}`,
+      text: `Height: ${item.height}, Gender: ${item.gender}, Hair Color: ${item.hair_color}, Birth Year: ${item.birth_year}`,
     }));
     this.setState({ data: results });
   }
@@ -30,8 +30,7 @@ export default class App extends React.Component<object, AppState> {
     this.setState({ inputValue: value });
   }
   onSearch() {
-    this.getNewData(this.state.inputValue);
-    this.setState({ inputValue: '' });
+    this.getNewData(this.state.inputValue.trim());
   }
 
   render() {
