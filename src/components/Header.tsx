@@ -14,13 +14,14 @@ export default class Header extends React.Component<HeaderProps> {
       <>
         <header className="header">
           <Input
+            className="input"
             type="text"
             value={this.props.value}
             newValue={this.props.newValue}
             onEnter={this.props.onSearch}
             placeholder="Do you want find anyone?"
           />
-          <Button text="Search" onClick={this.props.onSearch} />
+          <Button className="button" text="Search" onClick={this.props.onSearch} />
         </header>
       </>
     );

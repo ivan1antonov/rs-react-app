@@ -6,7 +6,7 @@ export default class Content extends React.Component<ContentBoxProps> {
   render() {
     return (
       <>
-        <main className="Results">
+        <main className="results">
           <ContentBox data={this.props.data} />
         </main>
       </>

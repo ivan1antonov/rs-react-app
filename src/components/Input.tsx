@@ -6,6 +6,7 @@ interface InputProps {
   value: string;
   type: string;
   onEnter: () => void;
+  className: string;
 }
 
 export default class Input extends React.Component<InputProps> {
@@ -20,6 +21,7 @@ export default class Input extends React.Component<InputProps> {
   render() {
     return (
       <input
+        className={this.props.className}
         type={this.props.type}
         value={this.props.value}
         onKeyDown={this.handleKeyDown}
