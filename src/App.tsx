@@ -2,14 +2,14 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header';
 import Content from './components/Content';
-import ErrorBundary from './components/ErrorBundary';
+import ErrorBoundary from './components/ErrorBoundary.tsx';
 import { getResults } from './services/services.tsx';
 import type { resultsType, AppState, ApiResponse } from './types/types.tsx';
 
 export default class App extends React.Component<object, AppState> {
   constructor(props: object) {
     super(props);
-    this.state = { data: [], inputValue: '' };
+    this.state = { data: [], inputValue: '', shouldThrow: false };
   }
   getData(response: ApiResponse): void {
     const results: resultsType[] = response.results.map((item) => ({
@@ -36,17 +36,25 @@ export default class App extends React.Component<object, AppState> {
     this.getNewData(this.state.inputValue.trim());
     this.setState({ inputValue: '' });
   }
+  createError = () => {
+    this.setState({ shouldThrow: true });
+    console.log(this.state.shouldThrow);
+  };
 
   render() {
     return (
-      <ErrorBundary>
+      <ErrorBoundary>
         <Header
           value={this.state.inputValue}
           newValue={this.newValue.bind(this)}
           onSearch={this.onSearch.bind(this)}
         />
-        <Content data={this.state.data} />
-      </ErrorBundary>
+        <Content
+          data={this.state.data}
+          shouldThrow={this.state.shouldThrow}
+          isError={this.createError}
+        />
+      </ErrorBoundary>
     );
   }
 }

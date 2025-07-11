@@ -7,9 +7,15 @@ export interface ContentBoxProps {
   data: resultsType[];
 }
 
+export interface ContentProps extends ContentBoxProps {
+  isError: () => void;
+  shouldThrow?: boolean;
+}
+
 export interface AppState {
   data: resultsType[];
   inputValue: string;
+  shouldThrow: boolean;
 }
 
 export interface Responce {

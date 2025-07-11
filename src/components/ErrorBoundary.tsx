@@ -9,7 +9,7 @@ interface ErrorState {
   hasError: boolean;
 }
 
-export default class ErrorBundary extends React.Component<ErrorProps, ErrorState> {
+export default class ErrorBoundary extends React.Component<ErrorProps, ErrorState> {
   constructor(props: ErrorProps) {
     super(props);
     this.state = { hasError: false };
@@ -26,10 +26,12 @@ export default class ErrorBundary extends React.Component<ErrorProps, ErrorState
   render() {
     if (this.state.hasError) {
       return (
-        <>
-          <div>Произошла ошибка на странице, перезагрузите приложение</div>;
-          <Button onClick={() => window.location.reload()} text="Перезагрузить" />
-        </>
+        <div className="catch_box">
+          <div className="catch_error">
+            There was an error on the page, please restart the application
+          </div>
+          <Button className="reload" onClick={() => window.location.reload()} text="reload page" />
+        </div>
       );
     }
     return this.props.children;

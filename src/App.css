@@ -44,8 +44,6 @@ body {
   margin-bottom: 20px;
   padding: 8px 12px;
 }
-.content {
-}
 .content_name {
   margin-right: 20px;
 }
@@ -87,6 +85,19 @@ body {
 }
 .button {
   margin-left: 10px;
+}
+
+.catch_box {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 100vh;
+}
+.reload {
+  margin-top: 25px;
 }
 
 @keyframes starsMove {
