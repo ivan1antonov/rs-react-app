@@ -100,6 +100,14 @@ body {
   margin-top: 25px;
 }
 
+.loader {
+  padding-top: 40px;
+}
+.loader_img {
+  display: block;
+  margin: 0 auto;
+}
+
 @keyframes starsMove {
   from {
     background-position:

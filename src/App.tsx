@@ -3,13 +3,14 @@ import './App.css';
 import Header from './components/Header';
 import Content from './components/Content';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
+import Loader from './components/Loader.tsx';
 import { getResults } from './services/services.tsx';
 import type { resultsType, AppState, ApiResponse } from './types/types.tsx';
 
 export default class App extends React.Component<object, AppState> {
   constructor(props: object) {
     super(props);
-    this.state = { data: [], inputValue: '', shouldThrow: false };
+    this.state = { data: [], inputValue: '', shouldThrow: false, isLoading: true };
   }
   getData(response: ApiResponse): void {
     const results: resultsType[] = response.results.map((item) => ({
@@ -19,12 +20,22 @@ export default class App extends React.Component<object, AppState> {
     this.setState({ data: results });
   }
   async componentDidMount() {
-    const response = await getResults('');
-    this.getData(response);
+    this.setState({ isLoading: true });
+    try {
+      const response = await getResults('');
+      this.getData(response);
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
   async getNewData(value: string) {
-    const response = await getResults(value);
-    this.getData(response);
+    this.setState({ isLoading: true });
+    try {
+      const response = await getResults(value);
+      this.getData(response);
+    } finally {
+      this.setState({ isLoading: false });
+    }
   }
   newValue(value: string) {
     this.setState({ inputValue: value });
@@ -38,7 +49,6 @@ export default class App extends React.Component<object, AppState> {
   }
   createError = () => {
     this.setState({ shouldThrow: true });
-    console.log(this.state.shouldThrow);
   };
 
   render() {
@@ -49,11 +59,15 @@ export default class App extends React.Component<object, AppState> {
           newValue={this.newValue.bind(this)}
           onSearch={this.onSearch.bind(this)}
         />
-        <Content
-          data={this.state.data}
-          shouldThrow={this.state.shouldThrow}
-          isError={this.createError}
-        />
+        {this.state.isLoading ? (
+          <Loader />
+        ) : (
+          <Content
+            data={this.state.data}
+            shouldThrow={this.state.shouldThrow}
+            isError={this.createError}
+          />
+        )}
       </ErrorBoundary>
     );
   }

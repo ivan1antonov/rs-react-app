@@ -16,6 +16,7 @@ export interface AppState {
   data: resultsType[];
   inputValue: string;
   shouldThrow: boolean;
+  isLoading: boolean;
 }
 
 export interface Responce {
