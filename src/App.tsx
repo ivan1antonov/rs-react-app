@@ -21,11 +21,17 @@ export default class App extends React.Component<object, AppState> {
   }
   async componentDidMount() {
     this.setState({ isLoading: true });
-    try {
-      const response = await getResults('');
-      this.getData(response);
-    } finally {
-      this.setState({ isLoading: false });
+    const prevSearch = localStorage.getItem('results');
+    if (prevSearch) {
+      this.getNewData(prevSearch);
+      this.setState({ inputValue: prevSearch });
+    } else {
+      try {
+        const response = await getResults('');
+        this.getData(response);
+      } finally {
+        this.setState({ isLoading: false });
+      }
     }
   }
   async getNewData(value: string) {
