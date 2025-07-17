@@ -1,8 +1,26 @@
+body {
+  background-color: black;
+  color: beige;
+  box-sizing: border-box;
+  background-color: black;
+  background-image:
+    radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px),
+    radial-gradient(white 1px, transparent 1px);
+  background-size:
+    100px 100px,
+    150px 150px,
+    200px 200px;
+  background-position:
+    0 0,
+    50px 50px,
+    25px 75px;
+  animation: starsMove 60s linear infinite;
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
 }
 
 .logo {
@@ -17,13 +35,91 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+.results {
+  padding-top: 50px;
+}
+.content,
+.title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+}
+.content_name {
+  margin-right: 20px;
+}
+.title.grid {
+  border: 2px solid;
+  border-bottom: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  padding-bottom: 14px;
+}
 
-@keyframes logo-spin {
+.grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  justify-items: flex-start;
+  border: 1px dotted whitesmoke;
+  border-radius: 8px;
+  padding: 8px 12px;
+  gap: 1rem;
+}
+.header {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 1.3) 5%,
+    rgba(0, 0, 0, 1.8) 40%,
+    rgba(0, 0, 0, 2) 100%
+  );
+  background-color: black;
+}
+.input {
+  width: 300px;
+  margin-left: 150px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.button {
+  margin-left: 10px;
+}
+
+.catch_box {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 100vh;
+}
+.reload {
+  margin-top: 25px;
+}
+
+.loader {
+  padding-top: 40px;
+}
+.loader_img {
+  display: block;
+  margin: 0 auto;
+}
+
+@keyframes starsMove {
   from {
-    transform: rotate(0deg);
+    background-position:
+      0 0,
+      50px 50px,
+      25px 75px;
   }
   to {
-    transform: rotate(360deg);
+    background-position:
+      1000px 1000px,
+      1050px 1050px,
+      1025px 1075px;
   }
 }
 
