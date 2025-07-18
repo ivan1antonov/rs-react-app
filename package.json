@@ -10,7 +10,9 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "prepare": "husky && chmod ug+x .husky/*",
-    "deploy": "npm run build && gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist",
+    "test:coverage": "vitest run --coverage",
+    "test:ci": "c8 --check-coverage --lines 80 --functions 50 --branches 50 vitest run"
   },
   "dependencies": {
     "react": "^19.1.0",
