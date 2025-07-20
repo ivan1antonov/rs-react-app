@@ -3,14 +3,6 @@ import Content from './Content';
 import ErrorBoundary from './ErrorBoundary';
 import { describe, it, expect, vi } from 'vitest';
 
-export interface ContentBoxProps {
-  data: { name: string; text: string }[];
-}
-export interface ContentProps extends ContentBoxProps {
-  isError: () => void;
-  shouldThrow?: boolean;
-}
-
 describe('Content', () => {
   it('render content with Button Error Test', () => {
     const isError = vi.fn();

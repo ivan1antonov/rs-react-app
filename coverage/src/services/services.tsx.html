@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/1</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>0/14</span>
+                <span class='fraction'>14/14</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -78,36 +78,36 @@
 <a name='L13'></a><a href='#L13'>13</a>
 <a name='L14'></a><a href='#L14'>14</a>
 <a name='L15'></a><a href='#L15'>15</a>
-<a name='L16'></a><a href='#L16'>16</a></td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<a name='L16'></a><a href='#L16'>16</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >const api = {<span class="fstat-no" title="function not covered" ><span class="branch-0 cbranch-no" title="branch not covered" ></span></span></span>
-<span class="cstat-no" title="statement not covered" >  people: 'https://swapi.py4e.com/api/people/',</span>
-<span class="cstat-no" title="statement not covered" >  planets: 'https://swapi.py4e.com/api/planets/',</span>
-<span class="cstat-no" title="statement not covered" >  films: 'https://swapi.py4e.com/api/films/',</span>
-<span class="cstat-no" title="statement not covered" >  species: 'https://swapi.py4e.com/api/species/',</span>
-<span class="cstat-no" title="statement not covered" >  vehicles: 'https://swapi.py4e.com/api/vehicles/',</span>
-<span class="cstat-no" title="statement not covered" >  starships: 'https://swapi.py4e.com/api/starships/',</span>
-<span class="cstat-no" title="statement not covered" >};</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const api = {
+  people: 'https://swapi.py4e.com/api/people/',
+  planets: 'https://swapi.py4e.com/api/planets/',
+  films: 'https://swapi.py4e.com/api/films/',
+  species: 'https://swapi.py4e.com/api/species/',
+  vehicles: 'https://swapi.py4e.com/api/vehicles/',
+  starships: 'https://swapi.py4e.com/api/starships/',
+};
 &nbsp;
-<span class="cstat-no" title="statement not covered" >export async function getResults(query: string) {</span>
-<span class="cstat-no" title="statement not covered" >  const response = await fetch(api.people + `?search=${query}`);</span>
-<span class="cstat-no" title="statement not covered" >  const data = await response.json();</span>
-<span class="cstat-no" title="statement not covered" >  localStorage.setItem('results', query);</span>
-<span class="cstat-no" title="statement not covered" >  return data;</span>
-<span class="cstat-no" title="statement not covered" >}</span>
+export async function getResults(query: string) {
+  const response = await fetch(api.people + `?search=${query}`);
+  const data = await response.json();
+  localStorage.setItem('results', query);
+  return data;
+}
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -115,7 +115,7 @@
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-19T12:53:20.823Z
+                at 2025-07-20T11:48:40.629Z
             </div>
         <script src="../../prettify.js"></script>
         <script>
