@@ -1,35 +1,80 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import React from 'react';
 import './App.css';
+import Header from './components/Header';
+import Content from './components/Content';
+import ErrorBoundary from './components/ErrorBoundary.tsx';
+import Loader from './components/Loader.tsx';
+import { getResults } from './services/services.tsx';
+import type { resultsType, AppState, ApiResponse } from './types/types.tsx';
 
-function App() {
-  const [count, setCount] = useState(0);
+export default class App extends React.Component<object, AppState> {
+  constructor(props: object) {
+    super(props);
+    this.state = { data: [], inputValue: '', shouldThrow: false, isLoading: true };
+  }
+  getData(response: ApiResponse): void {
+    const results: resultsType[] = response.results.map((item) => ({
+      name: item.name,
+      text: `Height: ${item.height}, Gender: ${item.gender}, Hair Color: ${item.hair_color}, Birth Year: ${item.birth_year}`,
+    }));
+    this.setState({ data: results });
+  }
+  async componentDidMount() {
+    this.setState({ isLoading: true });
+    const prevSearch = localStorage.getItem('results');
+    if (prevSearch) {
+      this.getNewData(prevSearch);
+      this.setState({ inputValue: prevSearch });
+    } else {
+      try {
+        const response = await getResults('');
+        this.getData(response);
+      } finally {
+        this.setState({ isLoading: false });
+      }
+    }
+  }
+  async getNewData(value: string) {
+    this.setState({ isLoading: true });
+    try {
+      const response = await getResults(value);
+      this.getData(response);
+    } finally {
+      this.setState({ isLoading: false });
+    }
+  }
+  newValue(value: string) {
+    this.setState({ inputValue: value });
+  }
+  onSearch() {
+    if (localStorage.getItem('results') === this.state.inputValue.trim()) {
+      return;
+    }
+    this.getNewData(this.state.inputValue.trim());
+    this.setState({ inputValue: '' });
+  }
+  createError = () => {
+    this.setState({ shouldThrow: true });
+  };
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank" rel="noopener noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+  render() {
+    return (
+      <ErrorBoundary>
+        <Header
+          value={this.state.inputValue}
+          newValue={this.newValue.bind(this)}
+          onSearch={this.onSearch.bind(this)}
+        />
+        {this.state.isLoading ? (
+          <Loader />
+        ) : (
+          <Content
+            data={this.state.data}
+            shouldThrow={this.state.shouldThrow}
+            isError={this.createError}
+          />
+        )}
+      </ErrorBoundary>
+    );
+  }
 }
-
-export default App;
