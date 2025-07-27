@@ -1,13 +1,18 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import Header from './Header';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Header', () => {
   it('renders header container and into Input and Button components', () => {
     const mockNewValue = vi.fn();
     const mockOnSearch = vi.fn();
 
-    render(<Header value="test" newValue={mockNewValue} onSearch={mockOnSearch} />);
+    render(
+      <MemoryRouter>
+        <Header value="test" newValue={mockNewValue} onSearch={mockOnSearch} />
+      </MemoryRouter>
+    );
     const headerDiv = document.querySelector('.header');
     expect(headerDiv).toBeInTheDocument();
     const input = screen.getByDisplayValue('test');
