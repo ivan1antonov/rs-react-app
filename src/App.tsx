@@ -53,7 +53,6 @@ const App: React.FC = () => {
   function createError() {
     setShouldThrow(true);
   }
-  console.log('render App');
   return (
     <ErrorBoundary>
       <Header value={inputValue} newValue={newValue} onSearch={onSearch} />

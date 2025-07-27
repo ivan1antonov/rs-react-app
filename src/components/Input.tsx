@@ -15,10 +15,10 @@ const Input = ({ className, type, value, newValue, onEnter, placeholder }: Input
       onEnter();
     }
   }
-
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     newValue(e.target.value);
   }
+
   return (
     <input
       className={className}
@@ -31,4 +31,4 @@ const Input = ({ className, type, value, newValue, onEnter, placeholder }: Input
   );
 };
 
-export default React.memo(Input);
+export default Input;
