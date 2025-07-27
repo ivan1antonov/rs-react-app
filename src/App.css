@@ -108,6 +108,26 @@ body {
   margin: 0 auto;
 }
 
+.about_button {
+  margin-left: 20px;
+  background-color: rgb(199, 86, 86);
+  color: wheat;
+}
+.about {
+  text-align: center;
+}
+.about_link {
+  text-decoration: none;
+  color: wheat;
+  transition: all 0.3s;
+  display: block;
+  margin-bottom: 50px;
+}
+.about_link:hover {
+  color: rgb(190, 106, 106);
+  transition: all 0.3s;
+}
+
 @keyframes starsMove {
   from {
     background-position:

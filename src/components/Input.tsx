@@ -21,6 +21,7 @@ const Input = ({ className, type, value, newValue, onEnter, placeholder }: Input
 
   return (
     <input
+      id={'input'}
       className={className}
       type={type}
       value={value}

@@ -1,17 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Content from './components/Content';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import Loader from './components/Loader.tsx';
 import { getResults } from './services/services.tsx';
 import type { resultsType, ApiResponse } from './types/types.tsx';
+import About from './pages/About.tsx';
 
 const App: React.FC = () => {
   const [data, setData] = useState<resultsType[]>([]);
   const [inputValue, setInputValue] = useState('');
   const [shouldThrow, setShouldThrow] = useState(false);
   const [isLoading, setisLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const prevSearch = localStorage.getItem('results');
@@ -44,6 +48,7 @@ const App: React.FC = () => {
   }, []);
 
   function onSearch() {
+    navigate('/');
     if (localStorage.getItem('results') === inputValue.trim()) {
       return;
     }
@@ -53,14 +58,25 @@ const App: React.FC = () => {
   function createError() {
     setShouldThrow(true);
   }
+  const Main = () => {
+    return (
+      <>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <Content data={data} shouldThrow={shouldThrow} isError={createError} />
+        )}
+      </>
+    );
+  };
+
   return (
     <ErrorBoundary>
       <Header value={inputValue} newValue={newValue} onSearch={onSearch} />
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <Content data={data} shouldThrow={shouldThrow} isError={createError} />
-      )}
+      <Routes>
+        <Route path={'/'} element={<Main />} />
+        <Route path={'/about'} element={<About />} />
+      </Routes>
     </ErrorBoundary>
   );
 };
