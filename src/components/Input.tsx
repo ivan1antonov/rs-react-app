@@ -9,25 +9,26 @@ interface InputProps {
   className: string;
 }
 
-export default class Input extends React.Component<InputProps> {
-  handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && this.props.onEnter) {
-      this.props.onEnter();
+const Input = ({ className, type, value, newValue, onEnter, placeholder }: InputProps) => {
+  function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === 'Enter') {
+      onEnter();
     }
-  };
-  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.props.newValue(e.target.value);
-  };
-  render() {
-    return (
-      <input
-        className={this.props.className}
-        type={this.props.type}
-        value={this.props.value}
-        onKeyDown={this.handleKeyDown}
-        onChange={this.handleChange}
-        placeholder={this.props.placeholder}
-      />
-    );
   }
-}
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    newValue(e.target.value);
+  }
+  return (
+    <input
+      className={className}
+      type={type}
+      value={value}
+      onKeyDown={handleKeyDown}
+      onChange={handleChange}
+      placeholder={placeholder}
+    />
+  );
+};
+
+export default React.memo(Input);

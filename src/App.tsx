@@ -1,80 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './App.css';
 import Header from './components/Header';
 import Content from './components/Content';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import Loader from './components/Loader.tsx';
 import { getResults } from './services/services.tsx';
-import type { resultsType, AppState, ApiResponse } from './types/types.tsx';
+import type { resultsType, ApiResponse } from './types/types.tsx';
 
-export default class App extends React.Component<object, AppState> {
-  constructor(props: object) {
-    super(props);
-    this.state = { data: [], inputValue: '', shouldThrow: false, isLoading: true };
-  }
-  getData(response: ApiResponse): void {
+const App: React.FC = () => {
+  const [data, setData] = useState<resultsType[]>([]);
+  const [inputValue, setInputValue] = useState('');
+  const [shouldThrow, setShouldThrow] = useState(false);
+  const [isLoading, setisLoading] = useState(true);
+
+  useEffect(() => {
+    const prevSearch = localStorage.getItem('results');
+    if (prevSearch) {
+      getNewData(prevSearch);
+    } else {
+      getNewData('');
+    }
+  }, []);
+
+  function getData(response: ApiResponse): void {
     const results: resultsType[] = response.results.map((item) => ({
       name: item.name,
       text: `Height: ${item.height}, Gender: ${item.gender}, Hair Color: ${item.hair_color}, Birth Year: ${item.birth_year}`,
     }));
-    this.setState({ data: results });
+    setData(results);
   }
-  async componentDidMount() {
-    this.setState({ isLoading: true });
-    const prevSearch = localStorage.getItem('results');
-    if (prevSearch) {
-      this.getNewData(prevSearch);
-      this.setState({ inputValue: prevSearch });
-    } else {
-      try {
-        const response = await getResults('');
-        this.getData(response);
-      } finally {
-        this.setState({ isLoading: false });
-      }
-    }
-  }
-  async getNewData(value: string) {
-    this.setState({ isLoading: true });
+
+  async function getNewData(value: string) {
+    setisLoading(true);
     try {
       const response = await getResults(value);
-      this.getData(response);
+      getData(response);
     } finally {
-      this.setState({ isLoading: false });
+      setisLoading(false);
     }
   }
-  newValue(value: string) {
-    this.setState({ inputValue: value });
-  }
-  onSearch() {
-    if (localStorage.getItem('results') === this.state.inputValue.trim()) {
+  const newValue = useCallback((value: string) => {
+    setInputValue(value);
+  }, []);
+
+  function onSearch() {
+    if (localStorage.getItem('results') === inputValue.trim()) {
       return;
     }
-    this.getNewData(this.state.inputValue.trim());
-    this.setState({ inputValue: '' });
+    getNewData(inputValue.trim());
+    setInputValue('');
   }
-  createError = () => {
-    this.setState({ shouldThrow: true });
-  };
+  function createError() {
+    setShouldThrow(true);
+  }
+  console.log('render App');
+  return (
+    <ErrorBoundary>
+      <Header value={inputValue} newValue={newValue} onSearch={onSearch} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Content data={data} shouldThrow={shouldThrow} isError={createError} />
+      )}
+    </ErrorBoundary>
+  );
+};
 
-  render() {
-    return (
-      <ErrorBoundary>
-        <Header
-          value={this.state.inputValue}
-          newValue={this.newValue.bind(this)}
-          onSearch={this.onSearch.bind(this)}
-        />
-        {this.state.isLoading ? (
-          <Loader />
-        ) : (
-          <Content
-            data={this.state.data}
-            shouldThrow={this.state.shouldThrow}
-            isError={this.createError}
-          />
-        )}
-      </ErrorBoundary>
-    );
-  }
-}
+export default App;
