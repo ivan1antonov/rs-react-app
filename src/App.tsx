@@ -16,6 +16,7 @@ const App: React.FC = () => {
   const [shouldThrow, setShouldThrow] = useState(false);
   const [isLoading, setisLoading] = useState(true);
   const navigate = useNavigate();
+  console.log('App render');
 
   useEffect(() => {
     const prevSearch = localStorage.getItem('results');
