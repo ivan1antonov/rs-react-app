@@ -9,6 +9,7 @@ import Loader from './components/Loader.tsx';
 import { getResults } from './services/services.tsx';
 import type { resultsType, ApiResponse } from './types/types.tsx';
 import About from './pages/About.tsx';
+import logo from './assets/star-wars.svg';
 
 const App: React.FC = () => {
   const [data, setData] = useState<resultsType[]>([]);
@@ -16,7 +17,7 @@ const App: React.FC = () => {
   const [shouldThrow, setShouldThrow] = useState(false);
   const [isLoading, setisLoading] = useState(true);
   const navigate = useNavigate();
-  console.log('App render');
+  // console.log('App render');
 
   useEffect(() => {
     const prevSearch = localStorage.getItem('results');
@@ -73,6 +74,7 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
+      <img className="logo" src={logo} />
       <Header value={inputValue} newValue={newValue} onSearch={onSearch} />
       <Routes>
         <Route path={'/'} element={<Main />} />

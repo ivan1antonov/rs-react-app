@@ -108,6 +108,12 @@ body {
   margin: 0 auto;
 }
 
+.logo {
+  width: 100px;
+  height: 40px;
+  padding: 0px;
+}
+
 .about_button {
   margin-left: 20px;
   background-color: rgb(199, 86, 86);
