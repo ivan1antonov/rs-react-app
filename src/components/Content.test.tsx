@@ -6,7 +6,14 @@ import { describe, it, expect, vi } from 'vitest';
 describe('Content', () => {
   it('render content with Button Error Test', () => {
     const isError = vi.fn();
-    render(<Content isError={isError} data={[{ name: 'Test User', text: 'Hello World' }]} />);
+    render(
+      <Content
+        isError={isError}
+        data={[{ name: 'Test User', text: 'Hello World', url: '/details/1' }]}
+        shouldThrow={false}
+        onItemClick={vi.fn()}
+      />
+    );
     const contentDiv = screen.getByRole('main');
     expect(contentDiv).toBeInTheDocument();
 
@@ -21,7 +28,7 @@ describe('Content', () => {
     const isError = vi.fn();
     render(
       <ErrorBoundary>
-        <Content isError={isError} data={[]} shouldThrow={true} />
+        <Content isError={isError} data={[]} shouldThrow={true} onItemClick={vi.fn()} />
       </ErrorBoundary>
     );
     const errorText = screen.getByText(/there was an error on the page/i);
