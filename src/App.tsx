@@ -6,6 +6,7 @@ import ErrorBoundary from './components/ErrorBoundary.tsx';
 import About from './pages/About.tsx';
 import logo from './assets/star-wars.svg';
 import Main from './pages/Main';
+import NotFound from './pages/NotFound.tsx';
 import { getResults } from './services/services';
 import type { resultsType, ApiResponse } from './types/types';
 
@@ -82,7 +83,7 @@ const App: React.FC = () => {
           }
         />
         <Route
-          path="/:page"
+          path="/:page(\d+)"
           element={
             <Main
               data={data}
@@ -95,6 +96,7 @@ const App: React.FC = () => {
           }
         />
         <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </ErrorBoundary>
   );

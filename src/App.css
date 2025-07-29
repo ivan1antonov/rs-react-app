@@ -149,6 +149,9 @@ body {
 .pagination_item + .pagination_item {
   margin-left: 8px;
 }
+.noExist {
+  text-align: center;
+}
 
 @keyframes starsMove {
   from {
