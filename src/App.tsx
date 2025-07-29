@@ -82,19 +82,7 @@ const App: React.FC = () => {
             />
           }
         />
-        <Route
-          path="/:page(\d+)"
-          element={
-            <Main
-              data={data}
-              shouldThrow={shouldThrow}
-              createError={createError}
-              isLoading={isLoading}
-              pagination={pagination}
-              getNewData={getNewData}
-            />
-          }
-        />
+
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -103,3 +91,19 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+{
+  /* <Route
+  path="/:page(\d+)"
+  element={
+    <Main
+      data={data}
+      shouldThrow={shouldThrow}
+      createError={createError}
+      isLoading={isLoading}
+      pagination={pagination}
+      getNewData={getNewData}
+    />
+  }
+/>; */
+}

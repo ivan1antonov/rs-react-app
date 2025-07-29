@@ -14,7 +14,7 @@ const Pagination = ({ pagination }: { pagination: number }) => {
           className="pagination_item"
           text={String(el)}
           onClick={() => {
-            navigate(`/${el}`);
+            navigate(`/?page=${el}`);
           }}
         />
       ))}
