@@ -28,7 +28,7 @@ describe('getResults', () => {
     const query = 'Luke';
     const data = await getResults(query);
 
-    expect(fetch).toHaveBeenCalledWith(`https://swapi.py4e.com/api/people/?search=${query}`);
+    expect(fetch).toHaveBeenCalledWith(`https://swapi.py4e.com/api/people/?search=${query}&page=1`);
     expect(localStorage.setItem).toHaveBeenCalledWith('results', query);
     expect(data).toEqual(mockResponseName);
   });

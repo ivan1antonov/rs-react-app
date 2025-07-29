@@ -27,7 +27,7 @@ describe('App component', () => {
     await waitFor(() => {
       expect(screen.getByText('Luke Skywalker')).toBeInTheDocument();
     });
-    expect(services.getResults).toHaveBeenCalledWith('');
+    expect(services.getResults).toHaveBeenCalledWith('', 1);
   });
 
   it('shows loader while fetching data', async () => {
@@ -59,7 +59,7 @@ describe('App component', () => {
 
     await userEvent.click(button);
 
-    expect(services.getResults).toHaveBeenCalledWith('Luke Skywalker');
+    expect(services.getResults).toHaveBeenCalledWith('Luke Skywalker', 1);
 
     expect(input).toHaveValue('');
   });
