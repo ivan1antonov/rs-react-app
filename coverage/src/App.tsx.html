@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.6% </span>
+                <span class="strong">95.12% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>87/91</span>
+                <span class='fraction'>78/82</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.6% </span>
+                <span class="strong">95.12% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>87/91</span>
+                <span class='fraction'>78/82</span>
             </div>
         
             
@@ -160,15 +160,7 @@
 <a name='L95'></a><a href='#L95'>95</a>
 <a name='L96'></a><a href='#L96'>96</a>
 <a name='L97'></a><a href='#L97'>97</a>
-<a name='L98'></a><a href='#L98'>98</a>
-<a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a>
-<a name='L101'></a><a href='#L101'>101</a>
-<a name='L102'></a><a href='#L102'>102</a>
-<a name='L103'></a><a href='#L103'>103</a>
-<a name='L104'></a><a href='#L104'>104</a>
-<a name='L105'></a><a href='#L105'>105</a>
-<a name='L106'></a><a href='#L106'>106</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L98'></a><a href='#L98'>98</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -179,6 +171,7 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">22x</span>
@@ -190,6 +183,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-yes">5x</span>
@@ -251,20 +245,10 @@
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
-<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">22x</span>
 <span class="cline-any cline-yes">22x</span>
@@ -284,6 +268,7 @@ import Main from './pages/Main';
 import NotFound from './pages/NotFound.tsx';
 import { getResults } from './services/services';
 import type { resultsType, ApiResponse } from './types/types';
+import Details from './pages/Details.tsx';
 &nbsp;
 const App: React.FC = () =&gt; {
   const [inputValue, setInputValue] = useState('');
@@ -297,6 +282,7 @@ const App: React.FC = () =&gt; {
     const results: resultsType[] = response.results.map((item) =&gt; ({
       name: item.name,
       text: `Height: ${item.height}, Gender: ${item.gender}, Hair Color: ${item.hair_color}, Birth Year: ${item.birth_year}`,
+      url: item.url,
     }));
     setData(results);
   }
@@ -356,20 +342,10 @@ const App: React.FC = () =&gt; {
               getNewData={getNewData}
             /&gt;
           }
-        /&gt;
-        &lt;Route
-          path="/:page(\d+)"
-          element={
-            &lt;Main
-              data={data}
-              shouldThrow={shouldThrow}
-              createError={createError}
-              isLoading={isLoading}
-              pagination={pagination}
-              getNewData={getNewData}
-            /&gt;
-          }
-        /&gt;
+        &gt;
+          &lt;Route path="details/:id" element={&lt;Details /&gt;} /&gt;
+        &lt;/Route&gt;
+&nbsp;
         &lt;Route path="/about" element={&lt;About /&gt;} /&gt;
         &lt;Route path="*" element={&lt;NotFound /&gt;} /&gt;
       &lt;/Routes&gt;
@@ -385,7 +361,7 @@ export default App;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-29T12:14:20.193Z
+                at 2025-07-29T20:04:10.817Z
             </div>
         <script src="../prettify.js"></script>
         <script>

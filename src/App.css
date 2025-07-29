@@ -64,6 +64,9 @@ body {
   padding: 8px 12px;
   gap: 1rem;
 }
+.grid.row {
+  cursor: pointer;
+}
 .header {
   margin: 0 auto;
   display: flex;
@@ -151,6 +154,26 @@ body {
 }
 .noExist {
   text-align: center;
+}
+.main-wrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+.main-left {
+  flex: 2;
+}
+
+.main-right.hidden {
+  display: none;
+}
+
+.main-right {
+  flex: 1;
+  background-color: transparent;
+  padding: 1rem;
+  border-left: 1px dotted wheat;
+  margin-top: 20px;
 }
 
 @keyframes starsMove {

@@ -9,6 +9,7 @@ import Main from './pages/Main';
 import NotFound from './pages/NotFound.tsx';
 import { getResults } from './services/services';
 import type { resultsType, ApiResponse } from './types/types';
+import Details from './pages/Details.tsx';
 
 const App: React.FC = () => {
   const [inputValue, setInputValue] = useState('');
@@ -22,6 +23,7 @@ const App: React.FC = () => {
     const results: resultsType[] = response.results.map((item) => ({
       name: item.name,
       text: `Height: ${item.height}, Gender: ${item.gender}, Hair Color: ${item.hair_color}, Birth Year: ${item.birth_year}`,
+      url: item.url,
     }));
     setData(results);
   }
@@ -81,7 +83,9 @@ const App: React.FC = () => {
               getNewData={getNewData}
             />
           }
-        />
+        >
+          <Route path="details/:id" element={<Details />} />
+        </Route>
 
         <Route path="/about" element={<About />} />
         <Route path="*" element={<NotFound />} />
@@ -91,19 +95,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-{
-  /* <Route
-  path="/:page(\d+)"
-  element={
-    <Main
-      data={data}
-      shouldThrow={shouldThrow}
-      createError={createError}
-      isLoading={isLoading}
-      pagination={pagination}
-      getNewData={getNewData}
-    />
-  }
-/>; */
-}

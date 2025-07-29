@@ -1,4 +1,3 @@
-// import React from 'react';
 import rsLogo from '../assets/logo-rsschool3.png';
 
 const About = () => {
@@ -10,7 +9,7 @@ const About = () => {
       <a className="about_link" href="https://rs.school/courses/reactjs">
         Oy yeah. And I learn a course of React at school / here.
       </a>
-      <img src={rsLogo} />
+      <img src={rsLogo} alt={'rs-logo'} />
     </div>
   );
 };
