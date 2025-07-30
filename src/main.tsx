@@ -10,7 +10,7 @@ if (!rootElement) throw new Error('Root element not found');
 const root = createRoot(rootElement);
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="/rs-react-app">
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </React.StrictMode>
