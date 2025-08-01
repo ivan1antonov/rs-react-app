@@ -10,14 +10,25 @@ import NotFound from './pages/NotFound.tsx';
 import { getResults } from './services/services';
 import type { resultsType, ApiResponse } from './types/types';
 import Details from './pages/Details.tsx';
+// import { useDispatch } from 'react-redux';
+// import { useSelector } from 'react-redux';
+// import type { RootState } from './store/index.ts';
 
 const App: React.FC = () => {
-  const [inputValue, setInputValue] = useState('');
+  // const dispatch = useDispatch();
+  // const value = useSelector((state: RootState) => state.value);
+  // const isLoader = useSelector((state: RootState) => state.isLoader);
+
   const navigate = useNavigate();
   const [data, setData] = useState<resultsType[]>([]);
+  const [inputValue, setInputValue] = useState('');
   const [pagination, setPagination] = useState(0);
   const [shouldThrow, setShouldThrow] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  // const addValue = (value) => {
+  //   dispatch({ type: 'NEW_VALUE', payload: value });
+  // };
 
   function getData(response: ApiResponse): void {
     const results: resultsType[] = response.results.map((item) => ({
