@@ -24,4 +24,4 @@ export const shouldThrowReducer = (state = initState, action: { type: string }) 
 
 export const createShouldThrow = () => ({ type: SET_SHOULDTHROW });
 
-export const toggleLoader = () => ({ type: TOGGLE_SHOULDTHROW });
+export const toggleShouldThrow = () => ({ type: TOGGLE_SHOULDTHROW });
