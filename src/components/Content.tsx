@@ -1,20 +1,27 @@
 import ContentBox from './ContentBox';
 import Button from './Button';
-import type { ContentProps } from '../types/types';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../store';
+import { useEffect } from 'react';
+import { callAction } from '../utils/dispatch';
 
-const Content = ({
-  isError,
-  data,
-  shouldThrow,
-  onItemClick,
-}: ContentProps & { onItemClick: (url: string) => void }) => {
-  if (shouldThrow) {
-    throw new Error('Error inside to Content');
-  }
+const Content = () => {
+  const shouldThrow = useSelector((state: RootState) => state.shouldThrowReducer.shouldThrow);
+
+  useEffect(() => {
+    if (shouldThrow) {
+      throw new Error('Error inside to Content');
+    }
+  }, []);
+
+  const dispatch = useDispatch();
+
+  const { toggleShouldThrow } = callAction(dispatch);
+
   return (
     <main className="results">
-      <ContentBox data={data} onItemClick={onItemClick} />
-      <Button className="create error" onClick={isError} text="break the universe" />
+      <ContentBox />
+      <Button className="create error" onClick={toggleShouldThrow} text="break the universe" />
     </main>
   );
 };

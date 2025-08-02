@@ -1,4 +1,3 @@
-import { changeInputValue } from '../store/reducers/changeInputReducer';
 import { showLoader, toggleLoader } from '../store/reducers/loaderReducer';
 import { setPagination, clearPagination } from '../store/reducers/paginationReducer';
 import { createShouldThrow, toggleShouldThrow } from '../store/reducers/shouldThrowReducer';
@@ -15,5 +14,4 @@ export const callAction = (dispatch: AppDispatch) => ({
   toggleShouldThrow: () => dispatch(toggleShouldThrow()),
   setValue: (val: string) => dispatch(setValue(val)),
   clearValue: () => dispatch(clearValue()),
-  changeInputValue: (val: string) => dispatch(changeInputValue(val)),
 });

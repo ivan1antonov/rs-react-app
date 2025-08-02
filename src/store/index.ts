@@ -3,14 +3,14 @@ import { valueReducer } from './reducers/valueReducer';
 import { shouldThrowReducer } from './reducers/shouldThrowReducer';
 import { paginationReducer } from './reducers/paginationReducer';
 import { loaderReducer } from './reducers/loaderReducer';
-import { changeInputReducer } from './reducers/changeInputReducer';
+import { dataReducer } from './reducers/dataReducer';
 
 const rootReducer = combineReducers({
   valueReducer,
   shouldThrowReducer,
   paginationReducer,
   loaderReducer,
-  changeInputReducer,
+  dataReducer,
 });
 
 export const setupStore = () => {

@@ -5,7 +5,7 @@ const initState = {
   value: '',
 };
 
-export const valueReducer = (state = initState, action: { type: string; payload?: string }) => {
+export const valueReducer = (state = initState, action: { type: string; payload: string }) => {
   switch (action.type) {
     case SET_VALUE:
       return {

@@ -1,10 +1,17 @@
-import type { ContentBoxProps } from '../types/types';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
 
-interface ClickDetails extends ContentBoxProps {
-  onItemClick: (url: string) => void;
-}
+const ContentBox = () => {
+  const data = useSelector((state: RootState) => state.dataReducer);
+  const navigate = useNavigate();
 
-const ContentBox = ({ data, onItemClick }: ClickDetails) => {
+  const onItemClick = (url: string) => {
+    if (!url) return;
+    const id = url.split('/').filter(Boolean).pop();
+    navigate(`/details/${id}`);
+    // console.log(id);
+  };
   return (
     <>
       <div className="title grid colomn">
