@@ -2,8 +2,10 @@ import { showLoader, toggleLoader } from '../store/reducers/loaderReducer';
 import { setPagination, clearPagination } from '../store/reducers/paginationReducer';
 import { createShouldThrow, toggleShouldThrow } from '../store/reducers/shouldThrowReducer';
 import { setValue, clearValue } from '../store/reducers/valueReducer';
+import { addSelect, removeSelect, clearSelect } from '../store/reducers/selectReducer';
 
 import type { AppDispatch } from '../store';
+import type { SelectedItem } from '../store/reducers/selectReducer';
 import { setPage } from '../store/reducers/pageReducer';
 
 export const callAction = (dispatch: AppDispatch) => ({
@@ -16,4 +18,7 @@ export const callAction = (dispatch: AppDispatch) => ({
   setValue: (val: string) => dispatch(setValue(val)),
   clearValue: () => dispatch(clearValue()),
   setPage: (val: number) => dispatch(setPage(val)),
+  addSelect: (item: SelectedItem) => dispatch(addSelect(item)),
+  removeSelect: (item: SelectedItem) => dispatch(removeSelect(item)),
+  clearSelect: () => dispatch(clearSelect()),
 });

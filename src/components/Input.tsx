@@ -2,21 +2,27 @@ import React from 'react';
 
 interface InputProps {
   placeholder?: string;
-  newValue: (value: string) => void;
-  value: string;
+  newValue?: (value: string) => void;
+  value?: string;
   type: string;
-  onEnter: () => void;
+  onEnter?: () => void;
   className: string;
+  // checked: boolean;
+  // onChange: () => void;
 }
 
 const Input = ({ className, type, value, newValue, onEnter, placeholder }: InputProps) => {
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
-      onEnter();
+      if (onEnter) {
+        onEnter();
+      }
     }
   }
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    newValue(e.target.value);
+    if (newValue) {
+      newValue(e.target.value);
+    }
   }
 
   return (

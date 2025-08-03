@@ -1,12 +1,27 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
+// import Input from './Input';
+// import { callAction } from '../utils/dispatch';
 
 const ContentBox = () => {
   const data = useSelector((state: RootState) => state.dataReducer);
   const navigate = useNavigate();
   const page = useSelector((state: RootState) => state.pageReducer);
-  console.log(page);
+  // const dispatch = useDispatch();
+  // console.log(page);
+  // const selectedItems = useSelector((state: RootState) => state.selectReducer.items);
+  // const { removeSelect, addSelect } = callAction(dispatch);
+
+  // const isChecked = selectedItems.some((el) => el.id === item.id);
+
+  // const handleCheckboxChange = () => {
+  //   if (isChecked) {
+  //     addSelect(item.id);
+  //   } else {
+  //     removeSelect(item);
+  //   }
+  // };
 
   const onItemClick = (id: number) => {
     if (!id) return;
