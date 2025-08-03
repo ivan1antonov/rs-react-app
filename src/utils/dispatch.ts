@@ -4,6 +4,7 @@ import { createShouldThrow, toggleShouldThrow } from '../store/reducers/shouldTh
 import { setValue, clearValue } from '../store/reducers/valueReducer';
 
 import type { AppDispatch } from '../store';
+import { setPage } from '../store/reducers/pageReducer';
 
 export const callAction = (dispatch: AppDispatch) => ({
   showLoader: () => dispatch(showLoader()),
@@ -14,4 +15,5 @@ export const callAction = (dispatch: AppDispatch) => ({
   toggleShouldThrow: () => dispatch(toggleShouldThrow()),
   setValue: (val: string) => dispatch(setValue(val)),
   clearValue: () => dispatch(clearValue()),
+  setPage: (val: number) => dispatch(setPage(val)),
 });

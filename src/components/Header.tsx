@@ -13,6 +13,7 @@ const Header = () => {
   const { setValue, clearValue } = callAction(dispatch);
   const navigate = useNavigate();
   function onSearch() {
+    navigate('/');
     dispatch(fetchResultsThunk({ query: value.trim() }));
     clearValue();
   }

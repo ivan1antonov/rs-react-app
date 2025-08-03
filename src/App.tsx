@@ -1,10 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import Main from './pages/Main';
-import Loader from './components/Loader';
-import { useSelector } from 'react-redux';
+import { fetchResultsThunk } from './store/thunks/thunk';
+import type { AppDispatch } from './store';
+import { useDispatch } from 'react-redux';
 
-import type { RootState } from './store';
+const App: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const results = localStorage.getItem('results') || '';
+  useEffect(() => {
+    dispatch(fetchResultsThunk({ query: results || 'all' }));
+  }, [dispatch, results]);
+
+  return <Main />;
+};
+
+export default App;
+
 // const addValue = (value) => {
 //   dispatch({ type: 'NEW_VALUE', payload: value });
 // };
@@ -47,9 +59,3 @@ import type { RootState } from './store';
 //   getNewData(inputValue.trim());
 //   setInputValue('');
 // }
-const App: React.FC = () => {
-  const isLoading = useSelector((state: RootState) => state.loaderReducer.isLoader);
-  return isLoading ? <Loader /> : <Main />;
-};
-
-export default App;

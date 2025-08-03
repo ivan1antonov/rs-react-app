@@ -37,6 +37,10 @@ body {
 }
 .results {
   padding-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
 }
 .content,
 .title {
@@ -174,6 +178,14 @@ body {
   padding: 1rem;
   border-left: 1px dotted wheat;
   margin-top: 20px;
+}
+.content_img {
+  width: 150px;
+}
+.content_img img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
 }
 
 @keyframes starsMove {

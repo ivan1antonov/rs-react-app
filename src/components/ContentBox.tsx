@@ -5,23 +5,24 @@ import type { RootState } from '../store';
 const ContentBox = () => {
   const data = useSelector((state: RootState) => state.dataReducer);
   const navigate = useNavigate();
+  const page = useSelector((state: RootState) => state.pageReducer);
+  console.log(page);
 
-  const onItemClick = (url: string) => {
-    if (!url) return;
-    const id = url.split('/').filter(Boolean).pop();
-    navigate(`/details/${id}`);
+  const onItemClick = (id: number) => {
+    if (!id) return;
+    const detail = `${id}.json`;
+    navigate(`/details/id/${detail}`);
     // console.log(id);
   };
   return (
     <>
-      <div className="title grid colomn">
-        <div className="title_name">Name</div>
-        <div className="title_text">Description</div>
-      </div>
-      {data.map((el) => (
-        <div className="content grid row" key={el.name} onClick={() => onItemClick(el.url)}>
+      {data.slice((Number(page) - 1) * 10, Number(page) * 10).map((el) => (
+        <div className="content" key={el.name} onClick={() => onItemClick(el.id)}>
+          <div className="content_img">
+            <img src={el.image} alt="person image" />
+          </div>
           <div className="content_name">{el.name}</div>
-          <div className="content_disc">{el.text}</div>
+          <div className="content_disc">{`Height: ${el.height}, Mass: ${el.mass}`}</div>
         </div>
       ))}
     </>

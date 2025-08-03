@@ -4,6 +4,15 @@ export interface resultsType {
   url: string;
 }
 
+export interface responseType {
+  id: number;
+  name: string;
+  height: number;
+  mass: number;
+  hairColor: string;
+  image: string;
+}
+
 export interface ContentBoxProps {
   data: resultsType[];
 }

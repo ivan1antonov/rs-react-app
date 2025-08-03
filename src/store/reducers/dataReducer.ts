@@ -1,5 +1,5 @@
-import type { resultsType } from '../../types/types';
-export type DataState = resultsType[];
+import type { responseType } from '../../types/types';
+export type DataState = responseType[];
 
 const SET_DATA = 'SET_DATA';
 const initState: DataState = [];
@@ -16,7 +16,7 @@ export const dataReducer = (
   }
 };
 
-export const setData = (data: resultsType[]) => ({
+export const setData = (data: responseType[]) => ({
   type: SET_DATA,
   payload: data,
 });

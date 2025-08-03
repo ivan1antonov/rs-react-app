@@ -6,18 +6,17 @@ import { showLoader, toggleLoader } from '../reducers/loaderReducer';
 
 export const fetchResultsThunk = createAsyncThunk(
   'search/fetchResults',
-  async ({ query, page }: { query: string; page?: number }, { dispatch }) => {
-    dispatch(showLoader);
+  async ({ query }: { query: string }, { dispatch }) => {
+    dispatch(showLoader());
     try {
-      const response = await getResults(query, page ?? 1);
-
-      dispatch(setData(response.results));
-      dispatch(setPagination(Math.ceil(response.count / 10)));
+      const response = await getResults(query);
+      dispatch(setData(response));
+      dispatch(setPagination(Math.ceil(response.length / 10)));
       localStorage.setItem('results', query);
     } catch (e) {
       console.error('Error into data responce: ', e);
     } finally {
-      dispatch(toggleLoader);
+      dispatch(toggleLoader());
     }
   }
 );

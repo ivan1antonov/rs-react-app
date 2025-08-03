@@ -4,6 +4,7 @@ import { shouldThrowReducer } from './reducers/shouldThrowReducer';
 import { paginationReducer } from './reducers/paginationReducer';
 import { loaderReducer } from './reducers/loaderReducer';
 import { dataReducer } from './reducers/dataReducer';
+import { pageReducer } from './reducers/pageReducer';
 
 const rootReducer = combineReducers({
   valueReducer,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   paginationReducer,
   loaderReducer,
   dataReducer,
+  pageReducer,
 });
 
 export const setupStore = () => {
