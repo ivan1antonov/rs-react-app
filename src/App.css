@@ -109,10 +109,10 @@ body {
 
 .loader {
   padding-top: 40px;
+  margin: 0 auto 30px;
 }
 .loader_img {
   display: block;
-  margin: 0 auto;
 }
 
 .logo {
@@ -186,6 +186,10 @@ body {
   display: block;
   width: 100%;
   object-fit: cover;
+}
+.wramper_contentbox {
+  display: flex;
+  justify-content: center;
 }
 
 @keyframes starsMove {

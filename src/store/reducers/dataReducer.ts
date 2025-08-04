@@ -1,5 +1,13 @@
-import type { responseType } from '../../types/types';
-export type DataState = responseType[];
+export type Item = {
+  id: number;
+  name: string;
+  height: string;
+  mass: string;
+  image: string;
+};
+
+export type DataState = Item[];
+export type SelectedItem = Omit<Item, 'image'>;
 
 const SET_DATA = 'SET_DATA';
 const initState: DataState = [];
@@ -16,7 +24,7 @@ export const dataReducer = (
   }
 };
 
-export const setData = (data: responseType[]) => ({
+export const setData = (data: DataState) => ({
   type: SET_DATA,
   payload: data,
 });

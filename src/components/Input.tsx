@@ -7,11 +7,18 @@ interface InputProps {
   type: string;
   onEnter?: () => void;
   className: string;
-  // checked: boolean;
-  // onChange: () => void;
+  onChange: () => void;
 }
 
-const Input = ({ className, type, value, newValue, onEnter, placeholder }: InputProps) => {
+const Input = ({
+  className,
+  type,
+  value,
+  newValue,
+  onEnter,
+  placeholder,
+  onChange,
+}: InputProps) => {
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter') {
       if (onEnter) {
@@ -20,17 +27,19 @@ const Input = ({ className, type, value, newValue, onEnter, placeholder }: Input
     }
   }
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (newValue) {
+    if (type === 'checkbox') {
+      onChange();
+    } else if (newValue) {
       newValue(e.target.value);
     }
   }
 
   return (
     <input
-      id={'input'}
+      id="input"
       className={className}
       type={type}
-      value={value}
+      value={type === 'checkbox' ? undefined : value}
       onKeyDown={handleKeyDown}
       onChange={handleChange}
       placeholder={placeholder}

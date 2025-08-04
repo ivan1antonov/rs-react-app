@@ -12,6 +12,10 @@ export type SelectedItem = {
 export type SelectState = {
   items: SelectedItem[];
 };
+type SelectAction =
+  | { type: typeof ADD_SELECT; payload: SelectedItem }
+  | { type: typeof REMOVE_SELECT; payload: SelectedItem }
+  | { type: typeof CLEAR_SELECT };
 
 const initState: SelectState = {
   items: [],
@@ -19,7 +23,7 @@ const initState: SelectState = {
 
 export const selectReducer = (
   state: SelectState = initState,
-  action: { type: string; payload: SelectedItem }
+  action: SelectAction
 ): SelectState => {
   switch (action.type) {
     case ADD_SELECT:
