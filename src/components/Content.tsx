@@ -2,17 +2,14 @@ import ContentBox from './ContentBox';
 import Button from './Button';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
-import { useEffect } from 'react';
 import { callAction } from '../utils/dispatch';
 
 const Content = () => {
   const shouldThrow = useSelector((state: RootState) => state.shouldThrowReducer.shouldThrow);
 
-  useEffect(() => {
-    if (shouldThrow) {
-      throw new Error('Error inside to Content');
-    }
-  }, []);
+  if (shouldThrow) {
+    throw new Error('Error inside to Content');
+  }
 
   const dispatch = useDispatch();
 
