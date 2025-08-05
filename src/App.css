@@ -20,7 +20,7 @@ body {
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding-top: 10px;
 }
 
 .logo {
@@ -38,7 +38,7 @@ body {
 .results {
   padding-top: 30px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -181,9 +181,10 @@ body {
 }
 .content {
   cursor: pointer;
+  max-width: 150px;
 }
 .content_img {
-  width: 150px;
+  width: 120px;
 }
 .content_img img {
   display: block;
@@ -197,6 +198,29 @@ body {
 .create.error {
   display: block;
 }
+.close {
+  margin-bottom: 20px;
+}
+.flyout {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;
+  border-top: 1px solid #ccc;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+}
+.download_select {
+  margin-right: 20px;
+}
+.item_select {
+  margin: 0;
+}
+
 @keyframes starsMove {
   from {
     background-position:

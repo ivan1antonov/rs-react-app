@@ -3,16 +3,30 @@ import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
 import Input from './Input';
 import { callAction } from '../utils/dispatch';
+import Button from './Button';
 
 const ContentBox = () => {
   const data = useSelector((state: RootState) => state.dataReducer);
   const navigate = useNavigate();
   const page = useSelector((state: RootState) => state.pageReducer);
-  // const selectItems = useSelector((state: RootState) => state.selectReducer);
   // console.log(selectItems);
   const dispatch = useDispatch();
   const selectedItems = useSelector((state: RootState) => state.selectReducer.items);
-  const { removeSelect, addSelect } = callAction(dispatch);
+  const { removeSelect, addSelect, clearSelect } = callAction(dispatch);
+  const handleDownload = () => {
+    const csvContent = selectedItems
+      .map((item) => `${item.name},${item.height},/detail/${item.id}`)
+      .join('\n');
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', `${selectedItems.length}_items.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   const onItemClick = (id: number) => {
     if (!id) return;
     const detail = `${id}`;
@@ -49,6 +63,15 @@ const ContentBox = () => {
           </div>
         );
       })}
+      {selectedItems.length > 0 && (
+        <div className="flyout">
+          <p className="item_select">{selectedItems.length} items are selected</p>
+          <div>
+            <Button className="button-clear_select" text="Unselect all" onClick={clearSelect} />
+            <Button className="download_select" text="Download" onClick={handleDownload} />
+          </div>
+        </div>
+      )}
     </>
   );
 };
