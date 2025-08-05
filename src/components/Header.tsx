@@ -14,7 +14,7 @@ const Header = () => {
   const navigate = useNavigate();
   function onSearch() {
     navigate('/');
-    dispatch(fetchResultsThunk({ query: value.trim() }));
+    dispatch(fetchResultsThunk({ query: 'all' }));
     clearValue();
   }
 

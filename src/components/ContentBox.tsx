@@ -4,6 +4,7 @@ import type { RootState } from '../store';
 import Input from './Input';
 import { callAction } from '../utils/dispatch';
 import Button from './Button';
+import Loader from './Loader';
 
 const ContentBox = () => {
   const data = useSelector((state: RootState) => state.dataReducer);
@@ -34,43 +35,50 @@ const ContentBox = () => {
   };
   return (
     <>
-      {data.slice((Number(page) - 1) * 10, Number(page) * 10).map((el) => {
-        const isChecked = selectedItems.some((item) => item.id === el.id);
+      {!data.length ? (
+        <Loader />
+      ) : (
+        <>
+          {data.slice((Number(page) - 1) * 10, Number(page) * 10).map((el) => {
+            const isChecked = selectedItems.some((item) => item.id === el.id);
 
-        const handleCheckboxChange = () => {
-          if (isChecked) {
-            removeSelect(el);
-          } else {
-            addSelect(el);
-          }
-        };
+            const handleCheckboxChange = () => {
+              if (isChecked) {
+                removeSelect(el);
+              } else {
+                addSelect(el);
+              }
+            };
 
-        return (
-          <div className="wramper_contentbox" key={el.id}>
-            <Input
-              className="checkbox"
-              type="checkbox"
-              isChecked={isChecked}
-              onChange={handleCheckboxChange}
-            />
-            <div className="content" onClick={() => onItemClick(el.id)}>
-              <div className="content_img">
-                <img src={el.image} alt="person image" />
+            return (
+              <div className="wramper_contentbox" key={el.id}>
+                <Input
+                  className="checkbox"
+                  type="checkbox"
+                  isChecked={isChecked}
+                  onChange={handleCheckboxChange}
+                />
+                <div className="content" onClick={() => onItemClick(el.id)}>
+                  <div className="content_img">
+                    <img src={el.image} alt="person image" />
+                  </div>
+                  <div className="content_name">{el.name}</div>
+                  <div className="content_disc">{`Height: ${el.height}, Mass: ${el.mass}`}</div>
+                </div>
               </div>
-              <div className="content_name">{el.name}</div>
-              <div className="content_disc">{`Height: ${el.height}, Mass: ${el.mass}`}</div>
+            );
+          })}
+
+          {selectedItems.length > 0 && (
+            <div className="flyout">
+              <p className="item_select">{selectedItems.length} items are selected</p>
+              <div>
+                <Button className="button-clear_select" text="Unselect all" onClick={clearSelect} />
+                <Button className="download_select" text="Download" onClick={handleDownload} />
+              </div>
             </div>
-          </div>
-        );
-      })}
-      {selectedItems.length > 0 && (
-        <div className="flyout">
-          <p className="item_select">{selectedItems.length} items are selected</p>
-          <div>
-            <Button className="button-clear_select" text="Unselect all" onClick={clearSelect} />
-            <Button className="download_select" text="Download" onClick={handleDownload} />
-          </div>
-        </div>
+          )}
+        </>
       )}
     </>
   );
