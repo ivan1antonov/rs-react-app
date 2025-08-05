@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for src/components/Content.tsx</title>
+    <title>Code coverage report for src/utils/dispatch.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,7 +19,7 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/components</a> Content.tsx</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/utils</a> dispatch.ts</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
@@ -32,14 +32,14 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/3</span>
+                <span class='fraction'>1/1</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">7.69% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>1/13</span>
             </div>
         
             
@@ -88,65 +88,56 @@
 <a name='L23'></a><a href='#L23'>23</a>
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
-<a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a>
-<a name='L28'></a><a href='#L28'>28</a>
-<a name='L29'></a><a href='#L29'>29</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L26'></a><a href='#L26'>26</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import ContentBox from './ContentBox';
-import Button from './Button';
-import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../store';
-import { callAction } from '../utils/dispatch';
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { showLoader, toggleLoader } from '../store/reducers/loaderReducer';
+import { setPagination, clearPagination } from '../store/reducers/paginationReducer';
+import { createShouldThrow, toggleShouldThrow } from '../store/reducers/shouldThrowReducer';
+import { setValue, clearValue } from '../store/reducers/valueReducer';
+import { addSelect, removeSelect, clearSelect } from '../store/reducers/selectReducer';
 &nbsp;
-const Content = () =&gt; {
-  const shouldThrow = useSelector((state: RootState) =&gt; state.shouldThrowReducer.shouldThrow);
+import type { AppDispatch } from '../store';
+import type { SelectedItem } from '../store/reducers/selectReducer';
+import { setPage } from '../store/reducers/pageReducer';
+export type CallActionReturn = ReturnType&lt;typeof callAction&gt;;
 &nbsp;
-  if (shouldThrow) {
-    throw new Error('Error inside to Content');
-  }
-&nbsp;
-  const dispatch = useDispatch();
-&nbsp;
-  const { toggleShouldThrow } = callAction(dispatch);
-&nbsp;
-  return (
-    &lt;div&gt;
-      &lt;main className="results"&gt;
-        &lt;ContentBox /&gt;
-      &lt;/main&gt;
-      &lt;Button className="create error" onClick={toggleShouldThrow} text="break the universe" /&gt;
-    &lt;/div&gt;
-  );
-};
-&nbsp;
-export default Content;
+export const callAction = (dispatch: AppDispatch) =&gt; ({
+  showLoader: <span class="fstat-no" title="function not covered" >() =&gt; dispatch(showLoader()),</span>
+  toggleLoader: <span class="fstat-no" title="function not covered" >() =&gt; dispatch(toggleLoader()),</span>
+  setPagination: <span class="fstat-no" title="function not covered" >(val: number) =&gt; dispatch(setPagination(val)),</span>
+  clearPagination: <span class="fstat-no" title="function not covered" >() =&gt; dispatch(clearPagination()),</span>
+  createShouldThrow: <span class="fstat-no" title="function not covered" >() =&gt; dispatch(createShouldThrow()),</span>
+  toggleShouldThrow: <span class="fstat-no" title="function not covered" >() =&gt; dispatch(toggleShouldThrow()),</span>
+  setValue: <span class="fstat-no" title="function not covered" >(val: string) =&gt; dispatch(setValue(val)),</span>
+  clearValue: <span class="fstat-no" title="function not covered" >() =&gt; dispatch(clearValue()),</span>
+  setPage: <span class="fstat-no" title="function not covered" >(val: number) =&gt; dispatch(setPage(val)),</span>
+  addSelect: <span class="fstat-no" title="function not covered" >(item: SelectedItem) =&gt; dispatch(addSelect(item)),</span>
+  removeSelect: <span class="fstat-no" title="function not covered" >(item: SelectedItem) =&gt; dispatch(removeSelect(item)),</span>
+  clearSelect: <span class="fstat-no" title="function not covered" >() =&gt; dispatch(clearSelect()),</span>
+});
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->

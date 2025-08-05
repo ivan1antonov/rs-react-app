@@ -14,6 +14,7 @@ describe('main.tsx', () => {
   beforeEach(() => {
     document.body.innerHTML = '<div id="root"></div>';
   });
+
   afterEach(() => {
     document.body.innerHTML = '';
     vi.resetModules();
@@ -24,6 +25,7 @@ describe('main.tsx', () => {
 
     const createRootMock = ReactDOMClient.createRoot as unknown as Mock;
     expect(createRootMock).toHaveBeenCalledWith(document.getElementById('root'));
+
     const rootInstance = createRootMock.mock.results[0].value;
     expect(rootInstance.render).toHaveBeenCalled();
   });

@@ -1,9 +1,19 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Main from '../pages/Main';
-import * as reactRedux from 'react-redux';
 import * as reactRouter from 'react-router-dom';
 import { fetchResultsThunk } from '../store/thunks/thunk';
+
+const mockDispatch = vi.fn();
+
+vi.mock('react-redux', async () => {
+  const actual = await vi.importActual<typeof import('react-redux')>('react-redux');
+  return {
+    ...actual,
+    useDispatch: () => mockDispatch,
+    useSelector: vi.fn(),
+  };
+});
 
 vi.mock('../components/Content', () => ({
   default: () => <div>Mocked Content</div>,
@@ -24,10 +34,11 @@ vi.mock('react-router-dom', async () => {
 });
 
 describe('Main component', () => {
-  it('renders Content, Pagination and Outlet', () => {
-    const mockDispatch = vi.fn();
-    vi.spyOn(reactRedux, 'useDispatch').mockReturnValue(mockDispatch);
+  beforeEach(() => {
+    mockDispatch.mockClear();
+  });
 
+  it('renders Content, Pagination and Outlet', () => {
     vi.mocked(reactRouter.useParams).mockReturnValue({});
 
     render(<Main />);
@@ -43,9 +54,6 @@ describe('Main component', () => {
   });
 
   it('shows Outlet when id is present in params', () => {
-    const mockDispatch = vi.fn();
-    vi.spyOn(reactRedux, 'useDispatch').mockReturnValue(mockDispatch);
-
     vi.mocked(reactRouter.useParams).mockReturnValue({ id: '123' });
 
     render(<Main />);
