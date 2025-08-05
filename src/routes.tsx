@@ -21,13 +21,13 @@ export const router = createBrowserRouter([
         element: <App />,
         children: [
           {
-            path: '/details/:id',
+            path: 'detail/:id',
             element: <Details />,
           },
         ],
       },
       {
-        path: '/about',
+        path: 'about',
         element: <About />,
       },
       {

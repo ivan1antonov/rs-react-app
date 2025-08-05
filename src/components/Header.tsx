@@ -29,7 +29,7 @@ const Header = () => {
         placeholder="Do you want find anyone?"
       />
       <Button className="button" text="Search" onClick={onSearch} />
-      <Button className="about_button" text="About author" onClick={() => navigate('/about')} />
+      <Button className="about_button" text="About author" onClick={() => navigate('about')} />
     </header>
   );
 };

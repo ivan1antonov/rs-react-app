@@ -173,11 +173,14 @@ body {
 }
 
 .main-right {
-  flex: 1;
+  flex: 0.5;
   background-color: transparent;
   padding: 1rem;
   border-left: 1px dotted wheat;
   margin-top: 20px;
+}
+.content {
+  cursor: pointer;
 }
 .content_img {
   width: 150px;
@@ -191,7 +194,9 @@ body {
   display: flex;
   justify-content: center;
 }
-
+.create.error {
+  display: block;
+}
 @keyframes starsMove {
   from {
     background-position:

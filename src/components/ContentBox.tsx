@@ -8,15 +8,15 @@ const ContentBox = () => {
   const data = useSelector((state: RootState) => state.dataReducer);
   const navigate = useNavigate();
   const page = useSelector((state: RootState) => state.pageReducer);
-  const selectItems = useSelector((state: RootState) => state.selectReducer);
-  console.log(selectItems);
+  // const selectItems = useSelector((state: RootState) => state.selectReducer);
+  // console.log(selectItems);
   const dispatch = useDispatch();
   const selectedItems = useSelector((state: RootState) => state.selectReducer.items);
   const { removeSelect, addSelect } = callAction(dispatch);
   const onItemClick = (id: number) => {
     if (!id) return;
-    const detail = `${id}.json`;
-    navigate(`/details/id/${detail}`);
+    const detail = `${id}`;
+    navigate(`detail/${detail}`);
   };
   return (
     <>
@@ -33,7 +33,12 @@ const ContentBox = () => {
 
         return (
           <div className="wramper_contentbox" key={el.id}>
-            <Input className="checkbox" type="checkbox" onChange={handleCheckboxChange} />
+            <Input
+              className="checkbox"
+              type="checkbox"
+              isChecked={isChecked}
+              onChange={handleCheckboxChange}
+            />
             <div className="content" onClick={() => onItemClick(el.id)}>
               <div className="content_img">
                 <img src={el.image} alt="person image" />

@@ -16,10 +16,12 @@ const Content = () => {
   const { toggleShouldThrow } = callAction(dispatch);
 
   return (
-    <main className="results">
-      <ContentBox />
+    <div>
+      <main className="results">
+        <ContentBox />
+      </main>
       <Button className="create error" onClick={toggleShouldThrow} text="break the universe" />
-    </main>
+    </div>
   );
 };
 

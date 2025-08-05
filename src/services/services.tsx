@@ -1,5 +1,5 @@
 const api = {
-  people: 'https://akabab.github.io/starwars-api/api/all.json',
+  people: 'https://akabab.github.io/starwars-api/api/',
   planets: 'https://swapi.py4e.com/api/planets/',
   films: 'https://swapi.py4e.com/api/films/',
   species: 'https://swapi.py4e.com/api/species/',
@@ -8,9 +8,17 @@ const api = {
 };
 
 export async function getResults(query: string) {
-  const response = await fetch(api.people);
-  const data = await response.json();
-  localStorage.setItem('results', query);
-  // console.log(data);
-  return data;
+  let request;
+  if (!isNaN(Number(query))) {
+    request = api.people + 'id/' + query + '.json';
+  } else {
+    request = api.people + query + '.json';
+  }
+  if (request) {
+    const response = await fetch(request);
+    const data = await response.json();
+    // localStorage.setItem('results', query);
+    // console.log(data);
+    return data;
+  }
 }
