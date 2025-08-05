@@ -1,39 +1,74 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import Content from './Content';
 import ErrorBoundary from './ErrorBoundary';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, vi, beforeEach, afterEach, expect, type Mock } from 'vitest';
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../store';
 
-describe('Content', () => {
-  it('render content with Button Error Test', () => {
-    const isError = vi.fn();
-    render(
-      <Content
-        isError={isError}
-        data={[{ name: 'Test User', text: 'Hello World', url: '/details/1' }]}
-        shouldThrow={false}
-        onItemClick={vi.fn()}
-      />
-    );
-    const contentDiv = screen.getByRole('main');
-    expect(contentDiv).toBeInTheDocument();
+vi.mock('react-redux', async () => {
+  const actual = await vi.importActual<typeof import('react-redux')>('react-redux');
+  return {
+    ...actual,
+    useSelector: vi.fn(),
+    useDispatch: vi.fn(),
+  };
+});
 
-    const errorButton = screen.getByText(/break the universe/i);
-    expect(errorButton).toBeInTheDocument();
+const mockUseSelector = useSelector as unknown as Mock;
+const mockUseDispatch = useDispatch as unknown as Mock;
 
-    fireEvent.click(errorButton);
-    expect(isError).toHaveBeenCalledTimes(1);
+const createMockState = (shouldThrow: boolean): RootState => ({
+  valueReducer: { value: '' },
+  shouldThrowReducer: { shouldThrow },
+  paginationReducer: {
+    pagination: 1,
+  },
+  loaderReducer: { isLoader: false },
+  dataReducer: [],
+  pageReducer: 1,
+  selectReducer: { items: [] },
+});
+
+describe('Content component with vitest', () => {
+  beforeEach(() => {
+    mockUseDispatch.mockReturnValue(vi.fn());
   });
 
-  it('throws error when shouldThrow is true', () => {
-    const isError = vi.fn();
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders Content and triggers error on click', () => {
+    mockUseSelector.mockImplementation((selector: (state: RootState) => unknown) =>
+      selector(createMockState(false))
+    );
+
     render(
       <ErrorBoundary>
-        <Content isError={isError} data={[]} shouldThrow={true} onItemClick={vi.fn()} />
+        <Content />
       </ErrorBoundary>
     );
+
+    const button = screen.getByText(/break the universe/i);
+    expect(button).toBeInTheDocument();
+
+    fireEvent.click(button);
+
     const errorText = screen.getByText(/there was an error on the page/i);
     expect(errorText).toBeInTheDocument();
-    const reloadButton = screen.getByText(/reload page/i);
-    expect(reloadButton).toBeInTheDocument();
+  });
+
+  it('throws error immediately if shouldThrow is true', () => {
+    mockUseSelector.mockImplementation((selector: (state: RootState) => unknown) =>
+      selector(createMockState(true))
+    );
+
+    render(
+      <ErrorBoundary>
+        <Content />
+      </ErrorBoundary>
+    );
+
+    expect(screen.getByText(/there was an error on the page/i)).toBeInTheDocument();
   });
 });

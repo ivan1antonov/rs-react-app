@@ -7,6 +7,7 @@ import { addSelect, removeSelect, clearSelect } from '../store/reducers/selectRe
 import type { AppDispatch } from '../store';
 import type { SelectedItem } from '../store/reducers/selectReducer';
 import { setPage } from '../store/reducers/pageReducer';
+export type CallActionReturn = ReturnType<typeof callAction>;
 
 export const callAction = (dispatch: AppDispatch) => ({
   showLoader: () => dispatch(showLoader()),
