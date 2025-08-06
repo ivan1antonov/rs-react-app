@@ -57,6 +57,7 @@ describe('Header', () => {
       addSelect: vi.fn(),
       removeSelect: vi.fn(),
       clearSelect: vi.fn(),
+      toggleTheme: vi.fn(),
     };
 
     vi.mocked(callAction).mockReturnValue(mockActions);
