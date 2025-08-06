@@ -37,7 +37,10 @@ describe('Header', () => {
   beforeEach(() => {
     vi.mocked(reactRedux.useDispatch).mockReturnValue(mockDispatch);
     vi.mocked(reactRedux.useSelector).mockImplementation((selector) =>
-      selector({ valueReducer: { value: 'test' } })
+      selector({
+        valueReducer: { value: 'test' },
+        switcherReducer: { isDark: false },
+      })
     );
     vi.mocked(reactRouterDom.useNavigate).mockReturnValue(mockNavigate);
 
