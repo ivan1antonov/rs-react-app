@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import type { RootState, AppDispatch } from '../store';
 import { callAction } from '../utils/dispatch';
 import { fetchResultsThunk } from '../store/thunks/thunk';
+import Switcher from './Switcher';
 
 const Header = () => {
   const value = useSelector((state: RootState) => state.valueReducer.value);
@@ -30,6 +31,7 @@ const Header = () => {
       />
       <Button className="button" text="Search" onClick={onSearch} />
       <Button className="about_button" text="About author" onClick={() => navigate('about')} />
+      <Switcher />
     </header>
   );
 };

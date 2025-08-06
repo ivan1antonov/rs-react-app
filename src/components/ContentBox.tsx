@@ -10,7 +10,6 @@ const ContentBox = () => {
   const data = useSelector((state: RootState) => state.dataReducer);
   const navigate = useNavigate();
   const page = useSelector((state: RootState) => state.pageReducer);
-  // console.log(selectItems);
   const dispatch = useDispatch();
   const selectedItems = useSelector((state: RootState) => state.selectReducer.items);
   const { removeSelect, addSelect, clearSelect } = callAction(dispatch);

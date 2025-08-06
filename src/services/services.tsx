@@ -12,8 +12,6 @@ export async function getResults(query: string) {
   if (request) {
     const response = await fetch(request);
     const data = await response.json();
-    // localStorage.setItem('results', query);
-    // console.log(data);
     return data;
   }
 }

@@ -6,20 +6,21 @@ import { useParams } from 'react-router-dom';
 import { fetchResultsThunk } from '../store/thunks/thunk';
 import type { AppDispatch } from '../store';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
 
 const Main = () => {
   const { id } = useParams();
   const isDetailOpen = Boolean(id);
   const dispatch = useDispatch<AppDispatch>();
   const results = 'all';
-  // console.log('results: ', results);
+  const theme = useSelector((state: RootState) => state.switcherReducer.isDark);
   useEffect(() => {
-    // console.log('first query');
     dispatch(fetchResultsThunk({ query: results }));
   }, []);
 
   return (
-    <div className="main-wrapper">
+    <div className={theme ? 'main-wrapper dark' : 'main-wrapper'}>
       <div className="main-left">
         <Content />
         <Pagination />

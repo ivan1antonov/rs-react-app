@@ -1,11 +1,41 @@
+:root {
+  --bg-color: black;
+  --text-color: beige;
+  --switcher-border: whitesmoke;
+  --switcher-dot: whitesmoke;
+  --border-color: whitesmoke;
+  --pagination-bg: transparent;
+  --pagination-color: whitesmoke;
+  --link-color: wheat;
+  --link-hover: rgb(190, 106, 106);
+  --about-button-bg: rgb(199, 86, 86);
+  --about-button-color: wheat;
+  --main-right-border: wheat;
+}
+
+.main-wrapper.dark {
+  --bg-color: whitesmoke;
+  --text-color: black;
+  --switcher-border: darkblue;
+  --switcher-dot: darkblue;
+  --border-color: darkblue;
+  --pagination-bg: transparent;
+  --pagination-color: darkblue;
+  --link-color: darkblue;
+  --link-hover: rgb(66, 66, 180);
+  --about-button-bg: rgb(86, 146, 199);
+  --about-button-color: white;
+  --main-right-border: darkblue;
+}
+
 body {
-  background-color: black;
-  color: beige;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   box-sizing: border-box;
-  background-color: black;
   background-image:
-    radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px),
-    radial-gradient(white 1px, transparent 1px);
+    radial-gradient(var(--text-color) 1px, transparent 1px),
+    radial-gradient(var(--text-color) 1px, transparent 1px),
+    radial-gradient(var(--text-color) 1px, transparent 1px);
   background-size:
     100px 100px,
     150px 150px,
@@ -22,7 +52,10 @@ body {
   margin: 0 auto;
   padding-top: 10px;
 }
-
+.main-wrapper.dark {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -34,6 +67,42 @@ body {
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
+}
+.switcher_wramper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50px;
+}
+.switcher_title {
+  margin: 0;
+}
+.switcher {
+  padding: 8px 26px;
+  border: 1px solid var(--switcher-border);
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.switcher::after {
+  position: absolute;
+  content: '';
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 10%;
+  height: 12px;
+  width: 12px;
+  background-color: var(--switcher-dot);
+  border: 1px solid var(--switcher-dot);
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.switcher.dark::after {
+  transform: translate(-50%, -50%);
+  left: 80%;
 }
 .results {
   padding-top: 30px;
@@ -123,21 +192,21 @@ body {
 
 .about_button {
   margin-left: 20px;
-  background-color: rgb(199, 86, 86);
-  color: wheat;
+  background-color: var(--about-button-bg);
+  color: var(--about-button-color);
 }
 .about {
   text-align: center;
 }
 .about_link {
   text-decoration: none;
-  color: wheat;
+  color: var(--link-color);
   transition: all 0.3s;
   display: block;
   margin-bottom: 50px;
 }
 .about_link:hover {
-  color: rgb(190, 106, 106);
+  color: var(--link-hover);
   transition: all 0.3s;
 }
 .pagination {
@@ -147,11 +216,11 @@ body {
   margin-bottom: 0;
 }
 .pagination_item {
-  border: 1px dotted whitesmoke;
+  border: 1px dotted var(--border-color);
   padding: 5px 10px;
   cursor: pointer;
-  background-color: transparent;
-  color: whitesmoke;
+  background-color: var(--pagination-bg);
+  color: var(--pagination-color);
 }
 .pagination_item + .pagination_item {
   margin-left: 8px;
@@ -162,6 +231,8 @@ body {
 .main-wrapper {
   display: flex;
   gap: 2rem;
+  background-color: transparent;
+  color: var(--text-color);
 }
 
 .main-left {
@@ -176,7 +247,7 @@ body {
   flex: 0.5;
   background-color: transparent;
   padding: 1rem;
-  border-left: 1px dotted wheat;
+  border-left: 1px dotted var(--main-right-border);
   margin-top: 20px;
 }
 .content {
@@ -208,6 +279,7 @@ body {
   width: 100%;
   background: transparent;
   border-top: 1px solid #ccc;
+  color: whitesmoke;
   padding: 1rem;
   display: flex;
   justify-content: space-between;

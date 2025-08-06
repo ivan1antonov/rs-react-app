@@ -3,6 +3,7 @@ import { setPagination, clearPagination } from '../store/reducers/paginationRedu
 import { createShouldThrow, toggleShouldThrow } from '../store/reducers/shouldThrowReducer';
 import { setValue, clearValue } from '../store/reducers/valueReducer';
 import { addSelect, removeSelect, clearSelect } from '../store/reducers/selectReducer';
+import { toggleTheme } from '../store/reducers/switcherReducer';
 
 import type { AppDispatch } from '../store';
 import type { SelectedItem } from '../store/reducers/selectReducer';
@@ -22,4 +23,5 @@ export const callAction = (dispatch: AppDispatch) => ({
   addSelect: (item: SelectedItem) => dispatch(addSelect(item)),
   removeSelect: (item: SelectedItem) => dispatch(removeSelect(item)),
   clearSelect: () => dispatch(clearSelect()),
+  toggleTheme: () => dispatch(toggleTheme()),
 });

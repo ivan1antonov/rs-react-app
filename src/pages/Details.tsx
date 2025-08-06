@@ -16,7 +16,6 @@ const Details = () => {
     getResults(id)
       .then((res) => {
         setData(res);
-        // console.log('res: ', res);
       })
       .finally(() => setLoading(false));
   }, [id]);

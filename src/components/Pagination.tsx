@@ -9,7 +9,6 @@ const Pagination = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const pagination = useSelector((state: RootState) => state.paginationReducer.pagination);
-  // console.log('pagination: ', pagination);
   const { setPage } = callAction(dispatch);
 
   if (pagination > 1) {
