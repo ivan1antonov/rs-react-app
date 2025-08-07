@@ -1,5 +1,7 @@
 const api = {
-  people: 'https://akabab.github.io/starwars-api/api/',
+  people: 'https://www.swapi.tech/api/people',
+  alternative: 'https://swapi.py4e.com/api/people',
+  withImage: 'https://akabab.github.io/starwars-api/',
 };
 
 export async function getResults(query: string) {
@@ -12,6 +14,7 @@ export async function getResults(query: string) {
   if (request) {
     const response = await fetch(request);
     const data = await response.json();
+    console.log(data);
     return data;
   }
 }
