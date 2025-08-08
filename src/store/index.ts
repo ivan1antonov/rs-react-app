@@ -7,6 +7,7 @@ import dataReducer from './reducers/dataReducer';
 import { pageReducer } from './reducers/pageReducer';
 import { selectReducer } from './reducers/selectReducer';
 import { switcherReducer } from './reducers/switcherReducer';
+import { starwarsApi } from './services/starwars';
 
 const rootReducer = combineReducers({
   valueReducer,
@@ -17,11 +18,13 @@ const rootReducer = combineReducers({
   pageReducer,
   selectReducer,
   switcherReducer,
+  [starwarsApi.reducerPath]: starwarsApi.reducer,
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(starwarsApi.middleware),
   });
 };
 export const store = setupStore();

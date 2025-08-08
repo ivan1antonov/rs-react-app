@@ -58,9 +58,9 @@ const ContentBox = () => {
                   onChange={handleCheckboxChange}
                 />
                 <div className="content" onClick={() => onItemClick(el.id)}>
-                  <div className="content_img">
-                    <img src={el.image} alt="person image" />
-                  </div>
+                  {/* <div className="content_img">
+                    <img src={el?.image} alt="person image" />
+                  </div> */}
                   <div className="content_name">{el.name}</div>
                   <div className="content_disc">{`Height: ${el.height}, Mass: ${el.mass}`}</div>
                 </div>

@@ -29,7 +29,7 @@ export interface AppState {
   isLoading: boolean;
 }
 
-export interface Responce {
+export interface Response {
   name: string;
   height: string;
   mass: string;
@@ -41,7 +41,7 @@ export interface Responce {
 }
 
 export interface InputData {
-  results: Responce[];
+  results: Response[];
 }
 
 export interface Person {
