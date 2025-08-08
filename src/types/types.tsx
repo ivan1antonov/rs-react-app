@@ -62,3 +62,11 @@ export interface ApiResponse {
   previous: string | null;
   results: Person[];
 }
+
+export type Item = {
+  id: number;
+  name: string;
+  height: string;
+  mass: string;
+  image: string;
+};

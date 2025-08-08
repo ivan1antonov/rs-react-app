@@ -3,7 +3,7 @@ import { valueReducer } from './reducers/valueReducer';
 import { shouldThrowReducer } from './reducers/shouldThrowReducer';
 import { paginationReducer } from './reducers/paginationReducer';
 import { loaderReducer } from './reducers/loaderReducer';
-import { dataReducer } from './reducers/dataReducer';
+import dataReducer from './reducers/dataReducer';
 import { pageReducer } from './reducers/pageReducer';
 import { selectReducer } from './reducers/selectReducer';
 import { switcherReducer } from './reducers/switcherReducer';
