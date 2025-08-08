@@ -1,27 +1,21 @@
-const SET_VALUE = 'SET_VALUE';
-const CLEAR_VALUE = 'CLEAR_VALUE';
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
 
-const initState = {
-  value: '',
-};
+const initialState: string = '';
 
-export const valueReducer = (state = initState, action: { type: string; payload: string }) => {
-  switch (action.type) {
-    case SET_VALUE:
-      return {
-        ...state,
-        value: action.payload,
-      };
-    case CLEAR_VALUE:
-      return {
-        ...state,
-        value: '',
-      };
-    default:
-      return state;
-  }
-};
+const dataSlice = createSlice({
+  name: 'value',
+  initialState,
+  reducers: {
+    setValue: (_state, action: PayloadAction<string>) => {
+      return action.payload;
+    },
+    clearValue: () => '',
+    searchValue: (state, action: PayloadAction<string>) => {
+      return action.payload;
+    },
+  },
+});
 
-export const setValue = (newValue: string) => ({ type: SET_VALUE, payload: newValue });
-
-export const clearValue = () => ({ type: SET_VALUE, payload: '' });
+export const { setValue, clearValue, searchValue } = dataSlice.actions;
+export default dataSlice.reducer;

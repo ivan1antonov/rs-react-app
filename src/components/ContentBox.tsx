@@ -2,14 +2,22 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
 import Input from './Input';
-import { callAction } from '../utils/dispatch';
+import { callAction } from '../store/services/dispatch';
 import Button from './Button';
 import Loader from './Loader';
+import { useGetPersonStarWarsQuery } from '../store/services/starwars';
 
 const ContentBox = () => {
-  const data = useSelector((state: RootState) => state.dataReducer);
+  const search = useSelector((state: RootState) => state.valueReducer);
+  const { data } = useGetPersonStarWarsQuery(search);
+  const transformedData = data?.results.map((el, index) => ({
+    ...el,
+    id: index + 1,
+  }));
+  console.log('data: ', data);
   const navigate = useNavigate();
-  const page = useSelector((state: RootState) => state.pageReducer);
+  // const page = useSelector((state: RootState) => state.pageReducer);
+  console.log('data: ', search);
   const dispatch = useDispatch();
   const selectedItems = useSelector((state: RootState) => state.selectReducer.items);
   const { removeSelect, addSelect, clearSelect } = callAction(dispatch);
@@ -34,11 +42,11 @@ const ContentBox = () => {
   };
   return (
     <>
-      {!data.length ? (
+      {!transformedData ? (
         <Loader />
       ) : (
         <>
-          {data.slice((Number(page) - 1) * 10, Number(page) * 10).map((el) => {
+          {transformedData.map((el) => {
             const isChecked = selectedItems.some((item) => item.id === el.id);
 
             const handleCheckboxChange = () => {

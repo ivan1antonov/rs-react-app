@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from './Button';
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
-import { callAction } from '../utils/dispatch';
+import { callAction } from '../store/services/dispatch';
 import { useDispatch } from 'react-redux';
 
 const Pagination = () => {

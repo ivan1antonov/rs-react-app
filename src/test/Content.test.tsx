@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
 import Content from './Content';
-import { callAction } from '../utils/dispatch';
+import { callAction } from '../store/services/dispatch';
 import { MemoryRouter } from 'react-router-dom';
 
 vi.mock('react-redux', async () => {

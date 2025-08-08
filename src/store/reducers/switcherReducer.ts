@@ -5,7 +5,6 @@ const initState = {
 };
 
 export const switcherReducer = (state = initState, action: { type: string }) => {
-  console.log(state);
   switch (action.type) {
     case TOGGLE_THEME:
       return {

@@ -4,8 +4,8 @@ import Header from './Header';
 import { MemoryRouter } from 'react-router-dom';
 import * as reactRedux from 'react-redux';
 import * as reactRouterDom from 'react-router-dom';
-import { callAction } from '../utils/dispatch';
-import type { CallActionReturn } from '../utils/dispatch';
+import { callAction } from '../store/services/dispatch';
+import type { CallActionReturn } from '../store/services/dispatch';
 
 vi.mock('react-redux', async () => {
   const actual = await vi.importActual<typeof reactRedux>('react-redux');

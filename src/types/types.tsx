@@ -64,7 +64,6 @@ export interface ApiResponse {
 }
 
 export type Item = {
-  id: number;
   name: string;
   height: string;
   mass: string;
