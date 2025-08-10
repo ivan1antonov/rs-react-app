@@ -293,6 +293,16 @@ body {
   margin: 0;
 }
 
+.download_select {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 @keyframes starsMove {
   from {
     background-position:

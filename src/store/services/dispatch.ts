@@ -4,6 +4,7 @@ import { createShouldThrow, toggleShouldThrow } from '../reducers/shouldThrowRed
 import { setValue, clearValue } from '../reducers/valueReducer';
 import { addSelect, removeSelect, clearSelect } from '../reducers/selectReducer';
 import { toggleTheme } from '../reducers/switcherReducer';
+import { searchData, clearData } from '../reducers/searchReducer';
 
 import type { AppDispatch } from '..';
 import type { SelectedItem } from '../reducers/selectReducer';
@@ -24,4 +25,6 @@ export const callAction = (dispatch: AppDispatch) => ({
   removeSelect: (item: SelectedItem) => dispatch(removeSelect(item)),
   clearSelect: () => dispatch(clearSelect()),
   toggleTheme: () => dispatch(toggleTheme()),
+  searchData: (val: string) => dispatch(searchData(val)),
+  clearData: () => dispatch(clearData()),
 });

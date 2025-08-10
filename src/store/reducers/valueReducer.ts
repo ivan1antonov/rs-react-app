@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: string = '';
 
-const dataSlice = createSlice({
+const valueSlice = createSlice({
   name: 'value',
   initialState,
   reducers: {
@@ -11,11 +11,8 @@ const dataSlice = createSlice({
       return action.payload;
     },
     clearValue: () => '',
-    searchValue: (state, action: PayloadAction<string>) => {
-      return action.payload;
-    },
   },
 });
 
-export const { setValue, clearValue, searchValue } = dataSlice.actions;
-export default dataSlice.reducer;
+export const { setValue, clearValue } = valueSlice.actions;
+export default valueSlice.reducer;
