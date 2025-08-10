@@ -1,44 +1,43 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import Main from '../pages/Main';
+import * as reactRedux from 'react-redux';
 import * as reactRouter from 'react-router-dom';
-import { fetchResultsThunk } from '../store/thunks/thunk';
 
-const mockDispatch = vi.fn();
+vi.mock('react-redux', () => ({
+  useSelector: vi.fn(),
+  useDispatch: () => vi.fn(),
+}));
 
-vi.mock('react-redux', async () => {
-  const actual = await vi.importActual<typeof import('react-redux')>('react-redux');
-  return {
-    ...actual,
-    useDispatch: () => mockDispatch,
-    useSelector: vi.fn(),
-  };
+vi.mock('react-router-dom', () => ({
+  useParams: vi.fn(),
+  Outlet: () => <div>Mocked Outlet</div>,
+}));
+
+vi.mock('../components/Content', () => {
+  const MockContent = () => <div>Mocked Content</div>;
+  MockContent.displayName = 'MockContent';
+  return { default: MockContent };
 });
 
-vi.mock('../components/Content', () => ({
-  default: () => <div>Mocked Content</div>,
-}));
-vi.mock('../components/Pagination', () => ({
-  default: () => <div>Mocked Pagination</div>,
-}));
-vi.mock('../store/thunks/thunk', () => ({
-  fetchResultsThunk: vi.fn(),
-}));
-vi.mock('react-router-dom', async () => {
-  const actual = await vi.importActual<typeof import('react-router-dom')>('react-router-dom');
-  return {
-    ...actual,
-    useParams: vi.fn(),
-    Outlet: () => <div>Mocked Outlet</div>,
-  };
+vi.mock('../components/Pagination', () => {
+  const MockPagination = () => <div>Mocked Pagination</div>;
+  MockPagination.displayName = 'MockPagination';
+  return { default: MockPagination };
 });
 
-describe('Main component', () => {
+describe('Main', () => {
   beforeEach(() => {
-    mockDispatch.mockClear();
+    vi.mocked(reactRedux.useSelector).mockReset();
+    vi.mocked(reactRouter.useParams).mockReset();
   });
 
-  it('renders Content, Pagination and Outlet', () => {
+  it('renders components and applies light theme and hides outlet panel', () => {
+    vi.mocked(reactRedux.useSelector).mockImplementation((selector) =>
+      selector({
+        switcherReducer: { isDark: false },
+      })
+    );
     vi.mocked(reactRouter.useParams).mockReturnValue({});
 
     render(<Main />);
@@ -47,18 +46,30 @@ describe('Main component', () => {
     expect(screen.getByText('Mocked Pagination')).toBeInTheDocument();
     expect(screen.getByText('Mocked Outlet')).toBeInTheDocument();
 
-    expect(mockDispatch).toHaveBeenCalledWith(fetchResultsThunk({ query: 'all' }));
+    const wrapper = screen.getByText('Mocked Content').closest('.main-wrapper');
+    expect(wrapper).toHaveClass('main-wrapper');
+    expect(wrapper).not.toHaveClass('dark');
 
     const rightPanel = screen.getByText('Mocked Outlet').parentElement;
-    expect(rightPanel?.className).toContain('hidden');
+    expect(rightPanel).toHaveClass('main-right');
+    expect(rightPanel).toHaveClass('hidden');
   });
 
-  it('shows Outlet when id is present in params', () => {
-    vi.mocked(reactRouter.useParams).mockReturnValue({ id: '123' });
+  it('renders with dark theme and shows outlet panel when id present', () => {
+    vi.mocked(reactRedux.useSelector).mockImplementation((selector) =>
+      selector({
+        switcherReducer: { isDark: true },
+      })
+    );
+    vi.mocked(reactRouter.useParams).mockReturnValue({ id: '42' });
 
     render(<Main />);
 
+    const wrapper = screen.getByText('Mocked Content').closest('.main-wrapper');
+    expect(wrapper).toHaveClass('dark');
+
     const rightPanel = screen.getByText('Mocked Outlet').parentElement;
-    expect(rightPanel?.className).not.toContain('hidden');
+    expect(rightPanel).toHaveClass('main-right');
+    expect(rightPanel).not.toHaveClass('hidden');
   });
 });

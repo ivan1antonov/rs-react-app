@@ -9,7 +9,7 @@ import { selectReducer } from './reducers/selectReducer';
 import { switcherReducer } from './reducers/switcherReducer';
 import { starwarsApi, starwarsDetailApi } from './services/starwars';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   valueReducer,
   searchReducer,
   shouldThrowReducer,

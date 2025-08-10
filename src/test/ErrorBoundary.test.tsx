@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import ErrorBoundary from './ErrorBoundary';
+import ErrorBoundary from '../components/ErrorBoundary';
 import { describe, it, expect } from 'vitest';
 import { mockWindowReload } from '../test-utils/mockWindowReload';
 

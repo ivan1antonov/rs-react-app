@@ -1,100 +1,66 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../store';
-import Content from './Content';
-import { callAction } from '../store/services/dispatch';
+import { describe, it, expect, vi } from 'vitest';
+import Content from '../components/Content';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import { rootReducer } from '../store';
+import type { AppDispatch } from '../store';
+import { starwarsApi, starwarsDetailApi } from '../store/services/starwars';
 import { MemoryRouter } from 'react-router-dom';
 
-vi.mock('react-redux', async () => {
-  const actual = await vi.importActual<typeof import('react-redux')>('react-redux');
-  return {
-    ...actual,
-    useSelector: vi.fn(),
-    useDispatch: vi.fn(),
-  };
-});
-
-vi.mock('../utils/dispatch', () => ({
-  callAction: vi.fn(),
+vi.mock('../store/services/dispatch', () => ({
+  callAction: (dispatch: AppDispatch) => ({
+    toggleShouldThrow: vi.fn(() => dispatch({ type: 'toggleShouldThrow' })),
+    setPagination: vi.fn(),
+    removeSelect: vi.fn(),
+    addSelect: vi.fn(),
+    clearSelect: vi.fn(),
+  }),
 }));
 
-const mockedUseSelector = useSelector as unknown as ReturnType<
-  typeof vi.fn<(selector: (state: RootState) => unknown) => unknown>
->;
-
-const mockedUseDispatch = useDispatch as unknown as ReturnType<
-  typeof vi.fn<() => ReturnType<typeof vi.fn>>
->;
-
-const mockedCallAction = callAction as unknown as ReturnType<
-  typeof vi.fn<(dispatch: ReturnType<typeof vi.fn>) => { toggleShouldThrow: () => void }>
->;
+function createTestStore(preloadedState = {}) {
+  return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(starwarsApi.middleware).concat(starwarsDetailApi.middleware),
+    preloadedState,
+  });
+}
 
 describe('Content component', () => {
-  const dispatchMock = vi.fn();
-  const toggleShouldThrowMock = vi.fn();
-
-  // Общий мок-стейт с нужными редьюсерами
-  const baseMockState = {
-    shouldThrowReducer: { shouldThrow: false },
-    selectReducer: { items: [] },
-    dataReducer: [],
-    pageReducer: 1,
-    valueReducer: { value: '' },
-    paginationReducer: { pagination: 1 },
-    loaderReducer: { isLoader: false },
-  } as unknown as RootState;
-
-  beforeEach(() => {
-    vi.clearAllMocks();
-    mockedUseDispatch.mockReturnValue(dispatchMock);
-    mockedCallAction.mockReturnValue({
-      toggleShouldThrow: toggleShouldThrowMock,
+  it('renders buttons and handles clicks', () => {
+    const store = createTestStore({
+      shouldThrowReducer: { shouldThrow: false },
     });
-  });
-
-  it('renders ContentBox and button when shouldThrow is false', () => {
-    mockedUseSelector.mockImplementation((selector) => selector(baseMockState));
 
     render(
-      <MemoryRouter>
-        <Content />
-      </MemoryRouter>
-    );
-
-    expect(screen.getByRole('button', { name: /break the universe/i })).toBeInTheDocument();
-  });
-
-  it('throws error when shouldThrow is true', () => {
-    mockedUseSelector.mockImplementation((selector) =>
-      selector({
-        ...baseMockState,
-        shouldThrowReducer: { shouldThrow: true },
-      })
-    );
-
-    expect(() =>
-      render(
+      <Provider store={store}>
         <MemoryRouter>
           <Content />
         </MemoryRouter>
-      )
-    ).toThrowError('Error inside to Content');
-  });
-
-  it('calls toggleShouldThrow on button click', () => {
-    mockedUseSelector.mockImplementation((selector) => selector(baseMockState));
-
-    render(
-      <MemoryRouter>
-        <Content />
-      </MemoryRouter>
+      </Provider>
     );
 
-    const button = screen.getByRole('button', { name: /break the universe/i });
-    fireEvent.click(button);
+    expect(screen.getByText('break the universe')).toBeDefined();
+    expect(screen.getByText('reset cache and reload data')).toBeDefined();
 
-    expect(toggleShouldThrowMock).toHaveBeenCalled();
+    fireEvent.click(screen.getByText('break the universe'));
+    fireEvent.click(screen.getByText('reset cache and reload data'));
+  });
+
+  it('throws error if shouldThrow is true', () => {
+    const store = createTestStore({
+      shouldThrowReducer: { shouldThrow: true },
+    });
+
+    expect(() =>
+      render(
+        <Provider store={store}>
+          <MemoryRouter>
+            <Content />
+          </MemoryRouter>
+        </Provider>
+      )
+    ).toThrow('Error inside to Content');
   });
 });

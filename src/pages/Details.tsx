@@ -7,7 +7,6 @@ const Details = () => {
   const { id } = useParams<{ id: string }>();
   const idNum = Number(id);
   const { data, isLoading, isError } = useGetDetailPersonQuery({ id: idNum });
-  // console.log('data: ', data);
   const navigate = useNavigate();
 
   if (!id || isNaN(idNum)) return null;
