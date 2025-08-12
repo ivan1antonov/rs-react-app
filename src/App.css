@@ -36,7 +36,7 @@ body {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 .results {
-  padding-top: 50px;
+  padding-top: 30px;
 }
 .content,
 .title {
@@ -63,6 +63,9 @@ body {
   border-radius: 8px;
   padding: 8px 12px;
   gap: 1rem;
+}
+.grid.row {
+  cursor: pointer;
 }
 .header {
   margin: 0 auto;
@@ -106,6 +109,71 @@ body {
 .loader_img {
   display: block;
   margin: 0 auto;
+}
+
+.logo {
+  width: 100px;
+  height: 40px;
+  padding: 0px;
+}
+
+.about_button {
+  margin-left: 20px;
+  background-color: rgb(199, 86, 86);
+  color: wheat;
+}
+.about {
+  text-align: center;
+}
+.about_link {
+  text-decoration: none;
+  color: wheat;
+  transition: all 0.3s;
+  display: block;
+  margin-bottom: 50px;
+}
+.about_link:hover {
+  color: rgb(190, 106, 106);
+  transition: all 0.3s;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+}
+.pagination_item {
+  border: 1px dotted whitesmoke;
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: transparent;
+  color: whitesmoke;
+}
+.pagination_item + .pagination_item {
+  margin-left: 8px;
+}
+.noExist {
+  text-align: center;
+}
+.main-wrapper {
+  display: flex;
+  gap: 2rem;
+}
+
+.main-left {
+  flex: 2;
+}
+
+.main-right.hidden {
+  display: none;
+}
+
+.main-right {
+  flex: 1;
+  background-color: transparent;
+  padding: 1rem;
+  border-left: 1px dotted wheat;
+  margin-top: 20px;
 }
 
 @keyframes starsMove {

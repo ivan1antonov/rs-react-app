@@ -1,80 +1,97 @@
-import React from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
-import Content from './components/Content';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
-import Loader from './components/Loader.tsx';
-import { getResults } from './services/services.tsx';
-import type { resultsType, AppState, ApiResponse } from './types/types.tsx';
+import About from './pages/About.tsx';
+import logo from './assets/star-wars.svg';
+import Main from './pages/Main';
+import NotFound from './pages/NotFound.tsx';
+import { getResults } from './services/services';
+import type { resultsType, ApiResponse } from './types/types';
+import Details from './pages/Details.tsx';
 
-export default class App extends React.Component<object, AppState> {
-  constructor(props: object) {
-    super(props);
-    this.state = { data: [], inputValue: '', shouldThrow: false, isLoading: true };
-  }
-  getData(response: ApiResponse): void {
+const App: React.FC = () => {
+  const [inputValue, setInputValue] = useState('');
+  const navigate = useNavigate();
+  const [data, setData] = useState<resultsType[]>([]);
+  const [pagination, setPagination] = useState(0);
+  const [shouldThrow, setShouldThrow] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  function getData(response: ApiResponse): void {
     const results: resultsType[] = response.results.map((item) => ({
       name: item.name,
       text: `Height: ${item.height}, Gender: ${item.gender}, Hair Color: ${item.hair_color}, Birth Year: ${item.birth_year}`,
+      url: item.url,
     }));
-    this.setState({ data: results });
+    setData(results);
   }
-  async componentDidMount() {
-    this.setState({ isLoading: true });
-    const prevSearch = localStorage.getItem('results');
-    if (prevSearch) {
-      this.getNewData(prevSearch);
-      this.setState({ inputValue: prevSearch });
-    } else {
-      try {
-        const response = await getResults('');
-        this.getData(response);
-      } finally {
-        this.setState({ isLoading: false });
-      }
-    }
+
+  function curPagination(count: number) {
+    setPagination(Math.ceil(count / 10));
   }
-  async getNewData(value: string) {
-    this.setState({ isLoading: true });
+
+  async function getNewData(value: string, page: number = 1) {
+    setIsLoading(true);
     try {
-      const response = await getResults(value);
-      this.getData(response);
+      const response = await getResults(value, page);
+      getData(response);
+      curPagination(response.count);
     } finally {
-      this.setState({ isLoading: false });
+      setIsLoading(false);
     }
   }
-  newValue(value: string) {
-    this.setState({ inputValue: value });
+
+  function createError() {
+    setShouldThrow(true);
   }
-  onSearch() {
-    if (localStorage.getItem('results') === this.state.inputValue.trim()) {
+
+  useEffect(() => {
+    const prevSearch = localStorage.getItem('results') || '';
+    getNewData(prevSearch);
+    setInputValue(prevSearch);
+  }, []);
+
+  const newValue = useCallback((value: string) => {
+    setInputValue(value);
+  }, []);
+
+  function onSearch() {
+    navigate('/');
+    if (localStorage.getItem('results') === inputValue.trim()) {
       return;
     }
-    this.getNewData(this.state.inputValue.trim());
-    this.setState({ inputValue: '' });
+    getNewData(inputValue.trim());
+    setInputValue('');
   }
-  createError = () => {
-    this.setState({ shouldThrow: true });
-  };
 
-  render() {
-    return (
-      <ErrorBoundary>
-        <Header
-          value={this.state.inputValue}
-          newValue={this.newValue.bind(this)}
-          onSearch={this.onSearch.bind(this)}
-        />
-        {this.state.isLoading ? (
-          <Loader />
-        ) : (
-          <Content
-            data={this.state.data}
-            shouldThrow={this.state.shouldThrow}
-            isError={this.createError}
-          />
-        )}
-      </ErrorBoundary>
-    );
-  }
-}
+  return (
+    <ErrorBoundary>
+      <img className="logo" src={logo} />
+      <Header value={inputValue} newValue={newValue} onSearch={onSearch} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Main
+              data={data}
+              shouldThrow={shouldThrow}
+              createError={createError}
+              isLoading={isLoading}
+              pagination={pagination}
+              getNewData={getNewData}
+            />
+          }
+        >
+          <Route path="details/:id" element={<Details />} />
+        </Route>
+
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </ErrorBoundary>
+  );
+};
+
+export default App;

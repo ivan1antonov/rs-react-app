@@ -1,6 +1,7 @@
 import { describe, it, vi, beforeEach, afterEach, expect } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import { mockResults } from './test-utils/localStorage';
+import { MemoryRouter } from 'react-router-dom';
 import * as services from './services/services';
 import type { ApiResponse } from './types/types';
 import App from './App';
@@ -17,23 +18,38 @@ describe('App component', () => {
   });
 
   it('calls getResults on mount and displays content after loading', async () => {
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
     expect(screen.getByAltText('loading...')).toBeInTheDocument();
     await waitFor(() => {
       expect(screen.getByText('Luke Skywalker')).toBeInTheDocument();
     });
-    expect(services.getResults).toHaveBeenCalledWith('');
+    expect(services.getResults).toHaveBeenCalledWith('', 1);
   });
+
   it('shows loader while fetching data', async () => {
     const fetchPromise = new Promise<ApiResponse>(() => {});
     vi.spyOn(services, 'getResults').mockImplementation(() => fetchPromise);
     localStorage.clear();
 
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
+
     expect(screen.getByAltText('loading...')).toBeInTheDocument();
   });
+
   it('updates input value and triggers search on button click', async () => {
-    render(<App />);
+    render(
+      <MemoryRouter>
+        <App />
+      </MemoryRouter>
+    );
 
     const input = screen.getByPlaceholderText('Do you want find anyone?');
     const button = screen.getByRole('button', { name: /search/i });
@@ -43,7 +59,7 @@ describe('App component', () => {
 
     await userEvent.click(button);
 
-    expect(services.getResults).toHaveBeenCalledWith('Luke Skywalker');
+    expect(services.getResults).toHaveBeenCalledWith('Luke Skywalker', 1);
 
     expect(input).toHaveValue('');
   });

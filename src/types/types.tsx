@@ -1,6 +1,7 @@
 export interface resultsType {
   name: string;
   text: string;
+  url: string;
 }
 
 export interface ContentBoxProps {
@@ -43,6 +44,7 @@ export interface Person {
   eye_color: string;
   birth_year: string;
   gender: string;
+  url: string;
 }
 
 export interface ApiResponse {

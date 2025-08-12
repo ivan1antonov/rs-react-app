@@ -7,9 +7,10 @@ const api = {
   starships: 'https://swapi.py4e.com/api/starships/',
 };
 
-export async function getResults(query: string) {
-  const response = await fetch(api.people + `?search=${query}`);
+export async function getResults(query: string, page: number = 1) {
+  const response = await fetch(api.people + `?search=${query}` + `&page=${page}`);
   const data = await response.json();
   localStorage.setItem('results', query);
+  // console.log(data);
   return data;
 }
