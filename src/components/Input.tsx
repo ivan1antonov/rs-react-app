@@ -1,32 +1,51 @@
 import React from 'react';
 
-interface InputProps {
-  placeholder?: string;
-  newValue: (value: string) => void;
-  value: string;
-  type: string;
-  onEnter: () => void;
+interface BaseProps {
   className: string;
+  type: 'text' | 'checkbox';
+  placeholder?: string;
+  onEnter?: () => void;
 }
 
-const Input = ({ className, type, value, newValue, onEnter, placeholder }: InputProps) => {
+type TextInputProps = BaseProps & {
+  type: 'text';
+  value: string;
+  newValue: (value: string) => void;
+};
+
+type CheckboxInputProps = BaseProps & {
+  type: 'checkbox';
+  isChecked: boolean;
+  onChange: () => void;
+};
+
+type InputProps = TextInputProps | CheckboxInputProps;
+
+const Input = (props: InputProps) => {
+  const { className, type, onEnter, placeholder } = props;
+
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && onEnter) {
       onEnter();
     }
   }
+
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    newValue(e.target.value);
+    if (type === 'text' && 'newValue' in props) {
+      props.newValue(e.target.value);
+    } else if (type === 'checkbox' && 'onChange' in props) {
+      props.onChange();
+    }
   }
 
   return (
     <input
-      id={'input'}
       className={className}
       type={type}
-      value={value}
-      onKeyDown={handleKeyDown}
+      value={type === 'text' ? props.value : undefined}
+      checked={type === 'checkbox' ? props.isChecked : undefined}
       onChange={handleChange}
+      onKeyDown={handleKeyDown}
       placeholder={placeholder}
     />
   );

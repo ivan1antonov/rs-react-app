@@ -1,36 +1,47 @@
 import { getResults } from './services';
-import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest';
-import { localStorageMock, resetLocalStorageMock } from '../test-utils/localStorage';
-import { mockResponseName } from '../test-utils/localStorage';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import type { Mock } from 'vitest';
 
 describe('getResults', () => {
-  const original = window.fetch;
+  const originalFetch = window.fetch;
+
   beforeEach(() => {
     window.fetch = vi.fn();
-
-    Object.defineProperty(window, 'localStorage', {
-      value: localStorageMock,
-      writable: true,
-    });
   });
 
   afterEach(() => {
     vi.resetAllMocks();
-    resetLocalStorageMock();
-    window.fetch = original;
+    window.fetch = originalFetch;
   });
 
-  it('fetches data and stores query in localStorage', async () => {
+  it('fetches data by id if query is number', async () => {
+    const mockData = { name: 'Luke Skywalker' };
     (window.fetch as Mock).mockResolvedValue({
-      json: vi.fn().mockResolvedValue(mockResponseName),
+      json: vi.fn().mockResolvedValue(mockData),
     });
 
-    const query = 'Luke';
+    const query = '1';
     const data = await getResults(query);
 
-    expect(fetch).toHaveBeenCalledWith(`https://swapi.py4e.com/api/people/?search=${query}&page=1`);
-    expect(localStorage.setItem).toHaveBeenCalledWith('results', query);
-    expect(data).toEqual(mockResponseName);
+    expect(window.fetch).toHaveBeenCalledWith(
+      'https://akabab.github.io/starwars-api/api/id/1.json'
+    );
+    expect(data).toEqual(mockData);
+  });
+
+  it('fetches data by name if query is not a number', async () => {
+    const mockData = { name: 'Leia Organa' };
+    (window.fetch as Mock).mockResolvedValue({
+      json: vi.fn().mockResolvedValue(mockData),
+    });
+
+    const query = 'Leia';
+    const data = await getResults(query);
+
+    expect(window.fetch).toHaveBeenCalledWith(
+      'https://akabab.github.io/starwars-api/api/Leia.json'
+    );
+    expect(data).toEqual(mockData);
   });
 
   it('throws error if fetch fails', async () => {

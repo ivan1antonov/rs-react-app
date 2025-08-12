@@ -1,50 +1,29 @@
 import Content from '../components/Content';
-import Loader from '../components/Loader';
-import Pagination from '../components/Pagination';
-import { Outlet, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import type { ContentBoxProps } from '../types/types';
+import Pagination from '../components/Pagination';
+import { Outlet } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { fetchResultsThunk } from '../store/thunks/thunk';
+import type { AppDispatch } from '../store';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
+import type { RootState } from '../store';
 
-interface mainProps extends ContentBoxProps {
-  shouldThrow: boolean;
-  isLoading: boolean;
-  pagination: number;
-  getNewData: (value: string, page?: number) => Promise<void>;
-  createError: () => void;
-}
-
-const Main = ({ data, shouldThrow, createError, isLoading, pagination, getNewData }: mainProps) => {
-  const [searchParams] = useSearchParams();
-  const pageNumber = Number(searchParams.get('page')) || 1;
-  const navigate = useNavigate();
+const Main = () => {
   const { id } = useParams();
   const isDetailOpen = Boolean(id);
-
+  const dispatch = useDispatch<AppDispatch>();
+  const results = 'all';
+  const theme = useSelector((state: RootState) => state.switcherReducer.isDark);
   useEffect(() => {
-    const prevSearch = localStorage.getItem('results') || '';
-    getNewData(prevSearch, pageNumber);
-  }, [pageNumber]);
+    dispatch(fetchResultsThunk({ query: results }));
+  }, []);
 
-  const handleItemClick = (url: string) => {
-    if (!url) return;
-    const id = url.split('/').filter(Boolean).pop();
-    navigate(`/details/${id}`);
-    // console.log(id);
-  };
-
-  return isLoading ? (
-    <Loader />
-  ) : (
-    <div className="main-wrapper">
+  return (
+    <div className={theme ? 'main-wrapper dark' : 'main-wrapper'}>
       <div className="main-left">
-        <Content
-          data={data}
-          shouldThrow={shouldThrow}
-          isError={createError}
-          onItemClick={handleItemClick}
-        />
-        <Pagination pagination={pagination} />
+        <Content />
+        <Pagination />
       </div>
       <div className={`main-right ${!isDetailOpen ? 'hidden' : ''}`}>
         <Outlet />

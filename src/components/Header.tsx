@@ -1,28 +1,37 @@
-// import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from './Button';
 import Input from './Input';
 import { useNavigate } from 'react-router-dom';
+import type { RootState, AppDispatch } from '../store';
+import { callAction } from '../utils/dispatch';
+import { fetchResultsThunk } from '../store/thunks/thunk';
+import Switcher from './Switcher';
 
-interface HeaderProps {
-  newValue: (value: string) => void;
-  onSearch: () => void;
-  value: string;
-}
+const Header = () => {
+  const value = useSelector((state: RootState) => state.valueReducer.value);
+  const dispatch = useDispatch<AppDispatch>();
 
-const Header = ({ value, newValue, onSearch }: HeaderProps) => {
+  const { setValue, clearValue } = callAction(dispatch);
   const navigate = useNavigate();
+  function onSearch() {
+    navigate('/');
+    dispatch(fetchResultsThunk({ query: 'all' }));
+    clearValue();
+  }
+
   return (
     <header className="header">
       <Input
         className="input"
         type="text"
         value={value}
-        newValue={newValue}
+        newValue={setValue}
         onEnter={onSearch}
         placeholder="Do you want find anyone?"
       />
       <Button className="button" text="Search" onClick={onSearch} />
-      <Button className="about_button" text="About author" onClick={() => navigate('/about')} />
+      <Button className="about_button" text="About author" onClick={() => navigate('about')} />
+      <Switcher />
     </header>
   );
 };

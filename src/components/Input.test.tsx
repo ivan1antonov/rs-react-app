@@ -2,11 +2,11 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import Input from './Input';
 
-describe('Input', () => {
-  it('render component placeholder with correct text', () => {
+describe('Input - Text Type', () => {
+  it('renders placeholder correctly', () => {
     render(
       <Input
-        placeholder="World can click me"
+        placeholder="Type here"
         newValue={() => {}}
         value=""
         type="text"
@@ -14,15 +14,15 @@ describe('Input', () => {
         className="input"
       />
     );
-    const inputElement = screen.getByPlaceholderText('World can click me');
+    const inputElement = screen.getByPlaceholderText('Type here') as HTMLInputElement;
     expect(inputElement).toBeInTheDocument();
   });
 
-  it('calls newValue when text is entered', () => {
+  it('calls newValue when text is typed', () => {
     const mockNewValue = vi.fn();
     render(
       <Input
-        placeholder="World can click me"
+        placeholder="Enter text"
         newValue={mockNewValue}
         value=""
         type="text"
@@ -30,12 +30,12 @@ describe('Input', () => {
         className="input"
       />
     );
-    const input = screen.getByPlaceholderText('World can click me');
-    fireEvent.change(input, { target: { value: 'hello' } });
-    expect(mockNewValue).toHaveBeenCalledWith('hello');
+    const input = screen.getByPlaceholderText('Enter text');
+    fireEvent.change(input, { target: { value: 'test input' } });
+    expect(mockNewValue).toHaveBeenCalledWith('test input');
   });
 
-  it('call Enter when Enter is pressed', () => {
+  it('calls onEnter when Enter key is pressed', () => {
     const mockOnEnter = vi.fn();
     render(
       <Input
@@ -47,9 +47,30 @@ describe('Input', () => {
         className="input"
       />
     );
-    screen.debug();
     const input = screen.getByPlaceholderText('Press enter');
     fireEvent.keyDown(input, { key: 'Enter', code: 'Enter', charCode: 13 });
     expect(mockOnEnter).toHaveBeenCalled();
+  });
+});
+
+describe('Input - Checkbox Type', () => {
+  it('renders checkbox and calls onChange when clicked', () => {
+    const mockOnChange = vi.fn();
+    render(
+      <Input
+        className="checkbox"
+        type="checkbox"
+        isChecked={false}
+        onChange={mockOnChange}
+        placeholder="Checkbox test"
+      />
+    );
+
+    const checkbox = screen.getByPlaceholderText('Checkbox test') as HTMLInputElement;
+    expect(checkbox).toBeInTheDocument();
+    expect(checkbox.type).toBe('checkbox');
+
+    fireEvent.click(checkbox);
+    expect(mockOnChange).toHaveBeenCalled();
   });
 });
