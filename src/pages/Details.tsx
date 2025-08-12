@@ -1,27 +1,17 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import type { Person } from '../types/types';
 import Button from '../components/Button';
-import { getResults } from '../services/services';
+import { useGetDetailPersonQuery } from '../store/services/starwars';
+import Loader from '../components/Loader';
 
 const Details = () => {
   const { id } = useParams<{ id: string }>();
-  const [data, setData] = useState<Person>();
-  const [loading, setLoading] = useState(true);
+  const idNum = Number(id);
+  const { data, isLoading, isError } = useGetDetailPersonQuery({ id: idNum });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (!id) return;
-    setLoading(true);
-    getResults(id)
-      .then((res) => {
-        setData(res);
-      })
-      .finally(() => setLoading(false));
-  }, [id]);
-
-  if (!id) return null;
-  if (loading) return <div className="details">Загрузка...</div>;
+  if (!id || isNaN(idNum)) return null;
+  if (isLoading) return <Loader />;
+  if (isError) return <div className="details">Sorry, we could not get data. Try later.</div>;
   if (!data) return null;
 
   return (

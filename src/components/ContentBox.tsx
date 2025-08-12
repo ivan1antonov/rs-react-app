@@ -1,83 +1,101 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store';
+import { useEffect } from 'react';
 import Input from './Input';
-import { callAction } from '../utils/dispatch';
+import { callAction } from '../store/services/dispatch';
 import Button from './Button';
 import Loader from './Loader';
+import { useGetPersonStarWarsQuery } from '../store/services/starwars';
 
 const ContentBox = () => {
-  const data = useSelector((state: RootState) => state.dataReducer);
-  const navigate = useNavigate();
+  const search = useSelector((state: RootState) => state.searchReducer);
   const page = useSelector((state: RootState) => state.pageReducer);
+  const { data, isLoading, isError } = useGetPersonStarWarsQuery({ search, page });
+
   const dispatch = useDispatch();
   const selectedItems = useSelector((state: RootState) => state.selectReducer.items);
-  const { removeSelect, addSelect, clearSelect } = callAction(dispatch);
-  const handleDownload = () => {
-    const csvContent = selectedItems
-      .map((item) => `${item.name},${item.height},/detail/${item.id}`)
-      .join('\n');
+  const { removeSelect, addSelect, clearSelect, setPagination } = callAction(dispatch);
+  const navigate = useNavigate();
+  const transformedData =
+    data?.results?.map((el, index) =>
+      page === 1
+        ? {
+            ...el,
+            id: index + 1,
+          }
+        : {
+            ...el,
+            id: Number(`${page - 1}1`) + index + 1,
+          }
+    ) ?? [];
+  useEffect(() => {
+    if (data) {
+      setPagination(Math.ceil(data.count / 10));
+    } else {
+      setPagination(0);
+    }
+  }, [data, setPagination]);
 
-    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', `${selectedItems.length}_items.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  if (isError) return <div>Возникла ошибка попробуйте позже снова направить запрос</div>;
+
   const onItemClick = (id: number) => {
     if (!id) return;
     const detail = `${id}`;
     navigate(`detail/${detail}`);
   };
+  if (isLoading) return <Loader />;
+
   return (
     <>
-      {!data.length ? (
-        <Loader />
-      ) : (
-        <>
-          {data.slice((Number(page) - 1) * 10, Number(page) * 10).map((el) => {
-            const isChecked = selectedItems.some((item) => item.id === el.id);
+      {transformedData.map((el) => {
+        const isChecked = selectedItems.some((item) => item.id === el.id);
 
-            const handleCheckboxChange = () => {
-              if (isChecked) {
-                removeSelect(el);
-              } else {
-                addSelect(el);
-              }
-            };
+        const handleCheckboxChange = () => {
+          if (isChecked) {
+            removeSelect(el);
+          } else {
+            addSelect(el);
+          }
+        };
 
-            return (
-              <div className="wramper_contentbox" key={el.id}>
-                <Input
-                  className="checkbox"
-                  type="checkbox"
-                  isChecked={isChecked}
-                  onChange={handleCheckboxChange}
-                />
-                <div className="content" onClick={() => onItemClick(el.id)}>
-                  <div className="content_img">
-                    <img src={el.image} alt="person image" />
-                  </div>
-                  <div className="content_name">{el.name}</div>
-                  <div className="content_disc">{`Height: ${el.height}, Mass: ${el.mass}`}</div>
-                </div>
-              </div>
-            );
-          })}
-
-          {selectedItems.length > 0 && (
-            <div className="flyout">
-              <p className="item_select">{selectedItems.length} items are selected</p>
-              <div>
-                <Button className="button-clear_select" text="Unselect all" onClick={clearSelect} />
-                <Button className="download_select" text="Download" onClick={handleDownload} />
-              </div>
+        return (
+          <div className="wramper_contentbox" key={el.id}>
+            <Input
+              className="checkbox"
+              type="checkbox"
+              isChecked={isChecked}
+              onChange={handleCheckboxChange}
+            />
+            <div className="content" onClick={() => onItemClick(el.id)}>
+              <div className="content_name">{el.name}</div>
+              <div className="content_disc">{`Height: ${el.height}, Mass: ${el.mass}`}</div>
             </div>
-          )}
-        </>
+          </div>
+        );
+      })}
+
+      {selectedItems.length > 0 && (
+        <div className="flyout">
+          <p className="item_select">{selectedItems.length} items are selected</p>
+          <div>
+            <Button className="button-clear_select" text="Unselect all" onClick={clearSelect} />
+
+            {selectedItems.length > 0 && (
+              <a
+                href={`data:text/csv;charset=utf-8,${encodeURIComponent(
+                  selectedItems
+                    .map((item) => `${item.name},${item.height},/detail/${item.id}`)
+                    .join('\n')
+                )}`}
+                download={`${selectedItems.length}_items.csv`}
+                className="download_select"
+              >
+                Download CSV
+              </a>
+            )}
+          </div>
+        </div>
       )}
     </>
   );

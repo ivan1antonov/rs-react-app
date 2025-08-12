@@ -4,17 +4,11 @@ import Details from './pages/Details';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
 import { Layout } from './components/Layout';
-import { Provider } from 'react-redux';
-import { store } from './store';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <Provider store={store}>
-        <Layout />
-      </Provider>
-    ),
+    element: <Layout />,
     children: [
       {
         path: '/',

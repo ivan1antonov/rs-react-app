@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
-import Input from './Input';
+import Input from '../components/Input';
 
 describe('Input - Text Type', () => {
   it('renders placeholder correctly', () => {

@@ -1,13 +1,14 @@
-import { showLoader, toggleLoader } from '../store/reducers/loaderReducer';
-import { setPagination, clearPagination } from '../store/reducers/paginationReducer';
-import { createShouldThrow, toggleShouldThrow } from '../store/reducers/shouldThrowReducer';
-import { setValue, clearValue } from '../store/reducers/valueReducer';
-import { addSelect, removeSelect, clearSelect } from '../store/reducers/selectReducer';
-import { toggleTheme } from '../store/reducers/switcherReducer';
+import { showLoader, toggleLoader } from '../reducers/loaderReducer';
+import { setPagination, clearPagination } from '../reducers/paginationReducer';
+import { createShouldThrow, toggleShouldThrow } from '../reducers/shouldThrowReducer';
+import { setValue, clearValue } from '../reducers/valueReducer';
+import { addSelect, removeSelect, clearSelect } from '../reducers/selectReducer';
+import { toggleTheme } from '../reducers/switcherReducer';
+import { searchData, clearData } from '../reducers/searchReducer';
 
-import type { AppDispatch } from '../store';
-import type { SelectedItem } from '../store/reducers/selectReducer';
-import { setPage } from '../store/reducers/pageReducer';
+import type { AppDispatch } from '..';
+import type { SelectedItem } from '../reducers/selectReducer';
+import { setPage } from '../reducers/pageReducer';
 export type CallActionReturn = ReturnType<typeof callAction>;
 
 export const callAction = (dispatch: AppDispatch) => ({
@@ -24,4 +25,6 @@ export const callAction = (dispatch: AppDispatch) => ({
   removeSelect: (item: SelectedItem) => dispatch(removeSelect(item)),
   clearSelect: () => dispatch(clearSelect()),
   toggleTheme: () => dispatch(toggleTheme()),
+  searchData: (val: string) => dispatch(searchData(val)),
+  clearData: () => dispatch(clearData()),
 });

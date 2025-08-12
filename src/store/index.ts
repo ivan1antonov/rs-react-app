@@ -1,27 +1,32 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { valueReducer } from './reducers/valueReducer';
+import valueReducer from './reducers/valueReducer';
+import searchReducer from './reducers/searchReducer';
 import { shouldThrowReducer } from './reducers/shouldThrowReducer';
 import { paginationReducer } from './reducers/paginationReducer';
 import { loaderReducer } from './reducers/loaderReducer';
-import { dataReducer } from './reducers/dataReducer';
 import { pageReducer } from './reducers/pageReducer';
 import { selectReducer } from './reducers/selectReducer';
 import { switcherReducer } from './reducers/switcherReducer';
+import { starwarsApi, starwarsDetailApi } from './services/starwars';
 
-const rootReducer = combineReducers({
+export const rootReducer = combineReducers({
   valueReducer,
+  searchReducer,
   shouldThrowReducer,
   paginationReducer,
   loaderReducer,
-  dataReducer,
   pageReducer,
   selectReducer,
   switcherReducer,
+  [starwarsApi.reducerPath]: starwarsApi.reducer,
+  [starwarsDetailApi.reducerPath]: starwarsDetailApi.reducer,
 });
 
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(starwarsApi.middleware).concat(starwarsDetailApi.middleware),
   });
 };
 export const store = setupStore();
