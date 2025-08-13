@@ -1,0 +1,336 @@
+:root {
+  --bg-color: black;
+  --text-color: beige;
+  --switcher-border: whitesmoke;
+  --switcher-dot: whitesmoke;
+  --border-color: whitesmoke;
+  --pagination-bg: transparent;
+  --pagination-color: whitesmoke;
+  --link-color: wheat;
+  --link-hover: rgb(190, 106, 106);
+  --about-button-bg: rgb(199, 86, 86);
+  --about-button-color: wheat;
+  --main-right-border: wheat;
+}
+
+.main-wrapper.dark {
+  --bg-color: whitesmoke;
+  --text-color: black;
+  --switcher-border: darkblue;
+  --switcher-dot: darkblue;
+  --border-color: darkblue;
+  --pagination-bg: transparent;
+  --pagination-color: darkblue;
+  --link-color: darkblue;
+  --link-hover: rgb(66, 66, 180);
+  --about-button-bg: rgb(86, 146, 199);
+  --about-button-color: white;
+  --main-right-border: darkblue;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  box-sizing: border-box;
+  background-image:
+    radial-gradient(var(--text-color) 1px, transparent 1px),
+    radial-gradient(var(--text-color) 1px, transparent 1px),
+    radial-gradient(var(--text-color) 1px, transparent 1px);
+  background-size:
+    100px 100px,
+    150px 150px,
+    200px 200px;
+  background-position:
+    0 0,
+    50px 50px,
+    25px 75px;
+  animation: starsMove 60s linear infinite;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding-top: 10px;
+}
+.main-wrapper.dark {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+.switcher_wramper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 50px;
+}
+.switcher_title {
+  margin: 0;
+}
+.switcher {
+  padding: 8px 26px;
+  border: 1px solid var(--switcher-border);
+  border-radius: 10px;
+  position: relative;
+  cursor: pointer;
+}
+
+.switcher::after {
+  position: absolute;
+  content: '';
+  top: 50%;
+  transform: translate(0, -50%);
+  left: 10%;
+  height: 12px;
+  width: 12px;
+  background-color: var(--switcher-dot);
+  border: 1px solid var(--switcher-dot);
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+
+.switcher.dark::after {
+  transform: translate(-50%, -50%);
+  left: 80%;
+}
+.results {
+  padding-top: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.content,
+.title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  padding: 8px 12px;
+}
+.content_name {
+  margin-right: 20px;
+}
+.title.grid {
+  border: 2px solid;
+  border-bottom: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  padding-bottom: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  justify-items: flex-start;
+  border: 1px dotted whitesmoke;
+  border-radius: 8px;
+  padding: 8px 12px;
+  gap: 1rem;
+}
+.grid.row {
+  cursor: pointer;
+}
+.header {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.8) 0%,
+    rgba(255, 255, 255, 1.3) 5%,
+    rgba(0, 0, 0, 1.8) 40%,
+    rgba(0, 0, 0, 2) 100%
+  );
+  background-color: black;
+}
+.input {
+  width: 300px;
+  margin-left: 150px;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.button {
+  margin-left: 10px;
+}
+
+.catch_box {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  height: 100vh;
+}
+.reload {
+  margin-top: 25px;
+}
+
+.loader {
+  padding-top: 40px;
+  margin: 0 auto 30px;
+}
+.loader_img {
+  display: block;
+}
+
+.logo {
+  width: 100px;
+  height: 40px;
+  padding: 0px;
+}
+
+.about_button {
+  margin-left: 20px;
+  background-color: var(--about-button-bg);
+  color: var(--about-button-color);
+}
+.about {
+  text-align: center;
+}
+.about_link {
+  text-decoration: none;
+  color: var(--link-color);
+  transition: all 0.3s;
+  display: block;
+  margin-bottom: 50px;
+}
+.about_link:hover {
+  color: var(--link-hover);
+  transition: all 0.3s;
+}
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+}
+.pagination_item {
+  border: 1px dotted var(--border-color);
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: var(--pagination-bg);
+  color: var(--pagination-color);
+}
+.pagination_item + .pagination_item {
+  margin-left: 8px;
+}
+.noExist {
+  text-align: center;
+}
+.main-wrapper {
+  display: flex;
+  gap: 2rem;
+  background-color: transparent;
+  color: var(--text-color);
+}
+
+.main-left {
+  flex: 2;
+}
+
+.main-right.hidden {
+  display: none;
+}
+
+.main-right {
+  flex: 0.5;
+  background-color: transparent;
+  padding: 1rem;
+  border-left: 1px dotted var(--main-right-border);
+  margin-top: 20px;
+}
+.content {
+  cursor: pointer;
+  max-width: 150px;
+}
+.content_img {
+  width: 120px;
+}
+.content_img img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+.wramper_contentbox {
+  display: flex;
+  justify-content: center;
+}
+.create.error {
+  display: block;
+}
+.close {
+  margin-bottom: 20px;
+}
+.flyout {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: transparent;
+  border-top: 1px solid #ccc;
+  color: whitesmoke;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+}
+.download_select {
+  margin-right: 20px;
+}
+.item_select {
+  margin: 0;
+}
+
+.download_select {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.reset_cache {
+  margin-top: 20px;
+}
+
+@keyframes starsMove {
+  from {
+    background-position:
+      0 0,
+      50px 50px,
+      25px 75px;
+  }
+  to {
+    background-position:
+      1000px 1000px,
+      1050px 1050px,
+      1025px 1075px;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
