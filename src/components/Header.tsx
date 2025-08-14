@@ -10,7 +10,7 @@ const Header = () => {
   const value = useSelector((state: RootState) => state.valueReducer);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { setValue, clearValue, searchData } = callAction(dispatch);
+  const { clearValue, searchData } = callAction(dispatch);
   const navigate = useNavigate();
 
   function onSearch() {
@@ -24,8 +24,6 @@ const Header = () => {
       <Input
         className="input"
         type="text"
-        value={value}
-        newValue={setValue}
         onEnter={onSearch}
         placeholder="Do you want find anyone?"
       />

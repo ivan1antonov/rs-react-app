@@ -1,10 +1,9 @@
 import type { Metadata } from 'next';
-import { Provider } from 'react-redux';
 import logo from '../assets/loader.gif';
-import { store } from '../store';
 import './globals.scss';
 import Image from 'next/image';
-import Link from 'next/link';
+import Header from '../components/Header';
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: 'Star Wars',
@@ -18,23 +17,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <title>Next js</title>
       </head>
       <body>
-        <Provider store={store}>
+        <Providers>
           <Image className="logo" src={logo} alt="logo" />
-          <header className="header">
-            <Input
-              className="input"
-              type="text"
-              value={value}
-              newValue={setValue}
-              onEnter={onSearch}
-              placeholder="Do you want find anyone?"
-            />
-            <Button className="button" text="Search" onClick={onSearch} />
-            <Link href="/about"> About author </Link>
-            <Switcher />
-          </header>
+          <Header />
           <main>{children}</main>
-        </Provider>
+        </Providers>
       </body>
     </html>
   );

@@ -1,4 +1,6 @@
+'use client';
 import React from 'react';
+import { useState } from 'react';
 
 interface BaseProps {
   className: string;
@@ -7,22 +9,10 @@ interface BaseProps {
   onEnter?: () => void;
 }
 
-type TextInputProps = BaseProps & {
-  type: 'text';
-  value: string;
-  newValue: (value: string) => void;
-};
-
-type CheckboxInputProps = BaseProps & {
-  type: 'checkbox';
-  isChecked: boolean;
-  onChange: () => void;
-};
-
-type InputProps = TextInputProps | CheckboxInputProps;
-
-const Input = (props: InputProps) => {
+const Input = (props: BaseProps) => {
   const { className, type, onEnter, placeholder } = props;
+  const [value, setValue] = useState('');
+  const [checked, setChecked] = useState(false);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === 'Enter' && onEnter) {
@@ -31,10 +21,10 @@ const Input = (props: InputProps) => {
   }
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (type === 'text' && 'newValue' in props) {
-      props.newValue(e.target.value);
-    } else if (type === 'checkbox' && 'onChange' in props) {
-      props.onChange();
+    if (type === 'text') {
+      setValue(e.target.value);
+    } else if (type === 'checkbox') {
+      setChecked((prev) => !prev);
     }
   }
 
@@ -42,8 +32,8 @@ const Input = (props: InputProps) => {
     <input
       className={className}
       type={type}
-      value={type === 'text' ? props.value : undefined}
-      checked={type === 'checkbox' ? props.isChecked : undefined}
+      value={value}
+      checked={checked}
       onChange={handleChange}
       onKeyDown={handleKeyDown}
       placeholder={placeholder}

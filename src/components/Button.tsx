@@ -1,7 +1,9 @@
+'use client';
+
 interface ButtonProps {
-  onClick: () => void;
-  text: string;
   className: string;
+  text: string;
+  onClick: () => void;
 }
 
 const Button = ({ className, text, onClick }: ButtonProps) => {
