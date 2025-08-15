@@ -20,7 +20,7 @@ const Header = () => {
   }
 
   return (
-    <header className="header">
+    <div className="header-box">
       <Input
         className="input"
         type="text"
@@ -30,7 +30,7 @@ const Header = () => {
       <Button className="button" text="Search" onClick={onSearch} />
       <Button className="about_button" text="About author" onClick={() => navigate('about')} />
       <Switcher />
-    </header>
+    </div>
   );
 };
 

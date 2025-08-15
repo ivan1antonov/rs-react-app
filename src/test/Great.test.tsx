@@ -21,7 +21,7 @@ describe('main.tsx', () => {
   });
 
   it('calls createRoot and render', async () => {
-    await import('./main.tsx');
+    await import('../main.jsx');
 
     const createRootMock = ReactDOMClient.createRoot as unknown as Mock;
     expect(createRootMock).toHaveBeenCalledWith(document.getElementById('root'));
@@ -34,7 +34,7 @@ describe('main.tsx', () => {
     document.body.innerHTML = '';
 
     await expect(async () => {
-      await import('./main.tsx');
+      await import('../main.jsx');
     }).rejects.toThrow('Root element not found');
   });
 });

@@ -1,13 +1,11 @@
-import Content from '../components/Content';
-import Pagination from '../components/Pagination';
-import { Outlet } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+'use client';
+
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store';
+import Content from '../components/Content';
+import Pagination from '../components/Pagination';
 
-const Main = () => {
-  const { id } = useParams();
-  const isDetailOpen = Boolean(id);
+export default function Main({ children }: { children: React.ReactNode }) {
   const theme = useSelector((state: RootState) => state.switcherReducer.isDark);
 
   return (
@@ -16,11 +14,7 @@ const Main = () => {
         <Content />
         <Pagination />
       </div>
-      <div className={`main-right ${!isDetailOpen ? 'hidden' : ''}`}>
-        <Outlet />
-      </div>
+      <div className="main-right">{children}</div>
     </div>
   );
-};
-
-export default Main;
+}

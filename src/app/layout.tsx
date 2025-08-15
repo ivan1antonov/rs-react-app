@@ -4,23 +4,23 @@ import './globals.scss';
 import Image from 'next/image';
 import Header from '../components/Header';
 import Providers from './providers';
+import Main from './Main';
 
 export const metadata: Metadata = {
   title: 'Star Wars',
-  description: 'My App is about people of Swar Wars',
+  description: 'My App is about persons of Star Wars',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <title>Next js</title>
-      </head>
       <body>
         <Providers>
-          <Image className="logo" src={logo} alt="logo" />
-          <Header />
-          <main>{children}</main>
+          <header>
+            <Image className="logo" src={logo} alt="logo" />
+            <Header />
+          </header>
+          <Main>{children}</Main>
         </Providers>
       </body>
     </html>

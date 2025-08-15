@@ -1,22 +1,27 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import Button from '../../../components/Button';
+'use client';
+
+import { useRouter } from 'next/router';
 import { useGetDetailPersonQuery } from '../../../store/services/starwars';
+import Button from '../../../components/Button';
 import Loader from '../../../components/Loader';
 
-const Details = () => {
-  const { id } = useParams<{ id: string }>();
-  const idNum = Number(id);
-  const { data, isLoading, isError } = useGetDetailPersonQuery({ id: idNum });
-  const navigate = useNavigate();
+interface DetailsProps {
+  params: { id: string };
+}
 
-  if (!id || isNaN(idNum)) return null;
+const Details = ({ params }: DetailsProps) => {
+  const idNum = Number(params.id);
+  const { data, isLoading, isError } = useGetDetailPersonQuery({ id: idNum });
+  const router = useRouter();
+
+  if (isNaN(idNum)) return null;
   if (isLoading) return <Loader />;
   if (isError) return <div className="details">Sorry, we could not get data. Try later.</div>;
   if (!data) return null;
 
   return (
     <div className="details">
-      <Button className="close" text="close" onClick={() => navigate('/')} />
+      <Button className="close" text="close" onClick={() => router.push('/')} />
       <div className="content_img">
         <img src={data.image} alt="person image" />
       </div>
