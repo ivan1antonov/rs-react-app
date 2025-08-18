@@ -1,36 +1,30 @@
 import ContentBox from './ContentBox';
 import Button from './Button';
-import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../store';
-import { callAction } from '../store/services/dispatch';
-import { starwarsApi, starwarsDetailApi } from '../store/services/starwars';
+import RefreshButton from './RefreshButton';
 
-const Content = () => {
-  const shouldThrow = useSelector((state: RootState) => state.shouldThrowReducer.shouldThrow);
-
-  if (shouldThrow) {
+const Content = async () => {
+  function shouldThrow() {
     throw new Error('Error inside to Content');
   }
 
-  const dispatch = useDispatch();
-  const handleResetCache = () => {
-    dispatch(starwarsApi.util.resetApiState());
-    dispatch(starwarsDetailApi.util.resetApiState());
+  const getData = async () => {
+    const response = await fetch('https://www.swapi.tech/api/people/', {
+      next: {
+        revalidate: 120,
+      },
+    });
+    return response.json();
   };
 
-  const { toggleShouldThrow } = callAction(dispatch);
+  const data = await getData();
 
   return (
     <div>
       <main className="results">
-        <ContentBox />
+        <ContentBox data={data} />
       </main>
-      <Button className="create error" onClick={toggleShouldThrow} text="break the universe" />
-      <Button
-        className="reset_cache"
-        onClick={handleResetCache}
-        text="reset cache and reload data"
-      />
+      <Button className="create error" onClick={shouldThrow} text="break the universe" />
+      <RefreshButton />
     </div>
   );
 };

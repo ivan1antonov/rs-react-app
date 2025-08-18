@@ -1,17 +1,15 @@
-import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../store';
 import { useEffect } from 'react';
-import Input from './Input';
 import { callAction } from '../store/services/dispatch';
+import Input from './Input';
 import Button from './Button';
 import Loader from './Loader';
-import { useGetPersonStarWarsQuery } from '../store/services/starwars';
+import type { RootState } from '../store';
+import type { ApiResponse } from '../types/types';
 
-const ContentBox = () => {
+const ContentBox = (data: ApiResponse) => {
   const search = useSelector((state: RootState) => state.searchReducer);
   const page = useSelector((state: RootState) => state.pageReducer);
-  const { data, isLoading, isError } = useGetPersonStarWarsQuery({ search, page });
 
   const dispatch = useDispatch();
   const selectedItems = useSelector((state: RootState) => state.selectReducer.items);

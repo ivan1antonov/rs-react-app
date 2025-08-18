@@ -1,7 +1,5 @@
 import type { Metadata } from 'next';
-import logo from '../assets/loader.gif';
 import './globals.scss';
-import Image from 'next/image';
 import Header from '../components/Header';
 import Providers from './providers';
 import Main from './Main';
@@ -16,10 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <Providers>
-          <header>
-            <Image className="logo" src={logo} alt="logo" />
-            <Header />
-          </header>
+          <Header />
           <Main>{children}</Main>
         </Providers>
       </body>
