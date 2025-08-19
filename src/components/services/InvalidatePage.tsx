@@ -2,7 +2,7 @@
 
 import { revalidatePath } from 'next/cache';
 
-export default function invalidatePage() {
+export default async function invalidatePage() {
   revalidatePath('/');
   revalidatePath('/search');
 }

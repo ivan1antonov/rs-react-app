@@ -1,7 +1,7 @@
 'use client';
 
 import { useTransition } from 'react';
-import invalidatePage from './serverAction/InvalidatePage';
+import invalidatePage from './services/InvalidatePage';
 
 export default function RefreshButton() {
   const [isPending, startTransition] = useTransition();

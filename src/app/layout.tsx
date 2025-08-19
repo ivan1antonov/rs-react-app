@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import './globals.scss';
 import Header from '../components/Header';
 import Providers from './providers';
-import Main from './Main';
 
 export const metadata: Metadata = {
   title: 'Star Wars',
@@ -15,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <Providers>
           <Header />
-          <Main>{children}</Main>
+          {children}
         </Providers>
       </body>
     </html>

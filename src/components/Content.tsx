@@ -1,32 +1,24 @@
 import ContentBox from './ContentBox';
-import Button from './Button';
 import RefreshButton from './RefreshButton';
+import getPeople from './services/ApiSearch';
+import shouldThrow from './services/CreateError';
+import Loader from './Loader';
+import Pagination from './Pagination';
 
-const Content = async () => {
-  function shouldThrow() {
-    throw new Error('Error inside to Content');
-  }
-
-  const getData = async () => {
-    const response = await fetch('https://www.swapi.tech/api/people/', {
-      next: {
-        revalidate: 120,
-      },
-    });
-    return response.json();
-  };
-
-  const data = await getData();
-
+export default async function Content({
+  searchParams,
+}: {
+  searchParams: { query?: string; page?: string };
+}) {
+  const data = await getPeople(searchParams?.query, searchParams?.page);
   return (
     <div>
-      <main className="results">
-        <ContentBox data={data} />
-      </main>
-      <Button className="create error" onClick={shouldThrow} text="break the universe" />
+      <main className="results">{data ? <ContentBox getPeople={data} /> : <Loader />}</main>
+      <button className="create error" onClick={shouldThrow}>
+        break the universe
+      </button>
       <RefreshButton />
+      <Pagination count={data.count} />
     </div>
   );
-};
-
-export default Content;
+}

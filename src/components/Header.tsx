@@ -1,48 +1,40 @@
 'use client';
 
-import { useSelector, useDispatch } from 'react-redux';
-import Button from './Button';
-import Input from './Input';
-import { useNavigate } from 'react-router-dom';
-import type { RootState, AppDispatch } from '../store';
-import { callAction } from '../store/services/dispatch';
 import Switcher from './Switcher';
 import Image from 'next/image';
-import logo from '../../public/star-wars.svg';
 import Link from 'next/link';
+import { useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 const Header = () => {
-  const value = useSelector((state: RootState) => state.valueReducer);
-  const dispatch = useDispatch<AppDispatch>();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [query, setQuery] = useState(searchParams?.get('query') || '');
 
-  const { clearValue, searchData } = callAction(dispatch);
-  const navigate = useNavigate();
-
-  function onSearch() {
-    navigate('/');
-    searchData(value);
-    clearValue();
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    router.push(`/?query=${encodeURIComponent(query)}`);
   }
 
   return (
     <>
       <div className="logo">
-        <Image src={logo} />
+        <Image src="/star-wars.svg" alt="star wars logo" width={56} height={12} />
       </div>
-      <div className="header-box">
-        <Input
+      <form className="header-box" onSubmit={handleSubmit}>
+        <input
           className="input"
           type="text"
-          onEnter={onSearch}
           placeholder="Do you want find anyone?"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
         />
-        <Button className="button" text="Search" onClick={onSearch} />
-        <Link href="/about" className="about_button">
-          {' '}
-          About author{' '}
-        </Link>
-        <Switcher />
-      </div>
+        <button type="submit">Search</button>
+      </form>
+      <Link href="/about" className="about_button">
+        About author
+      </Link>
+      <Switcher />
     </>
   );
 };
