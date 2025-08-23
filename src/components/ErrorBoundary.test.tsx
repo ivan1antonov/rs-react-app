@@ -10,12 +10,13 @@ describe('ErrorBoundary', () => {
     const Thrower = () => {
       throw new Error('VVVroom');
     };
-    // const onReload = vi.fn();
+
     render(
       <ErrorBoundary>
         <Thrower />
       </ErrorBoundary>
     );
+
     expect(
       screen.getByText(/There was an error on the page, please restart the application/i)
     ).toBeInTheDocument();
