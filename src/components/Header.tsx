@@ -1,38 +1,41 @@
-import { useSelector, useDispatch } from 'react-redux';
-import Button from './Button';
-import Input from './Input';
-import { useNavigate } from 'react-router-dom';
-import type { RootState, AppDispatch } from '../store';
-import { callAction } from '../store/services/dispatch';
+'use client';
+
 import Switcher from './Switcher';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 
 const Header = () => {
-  const value = useSelector((state: RootState) => state.valueReducer);
-  const dispatch = useDispatch<AppDispatch>();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [query, setQuery] = useState(searchParams?.get('query') || '');
 
-  const { setValue, clearValue, searchData } = callAction(dispatch);
-  const navigate = useNavigate();
-
-  function onSearch() {
-    navigate('/');
-    searchData(value);
-    clearValue();
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    router.push(`/?query=${encodeURIComponent(query)}`);
   }
 
   return (
-    <header className="header">
-      <Input
-        className="input"
-        type="text"
-        value={value}
-        newValue={setValue}
-        onEnter={onSearch}
-        placeholder="Do you want find anyone?"
-      />
-      <Button className="button" text="Search" onClick={onSearch} />
-      <Button className="about_button" text="About author" onClick={() => navigate('about')} />
+    <>
+      <div className="logo">
+        <Image src="/star-wars.svg" alt="star wars logo" width={56} height={12} />
+      </div>
+      <form className="header-box" onSubmit={handleSubmit}>
+        <input
+          className="input"
+          type="text"
+          placeholder="Do you want find anyone?"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <button type="submit">Search</button>
+      </form>
+      <Link href="/about" className="about_button">
+        About author
+      </Link>
       <Switcher />
-    </header>
+    </>
   );
 };
 

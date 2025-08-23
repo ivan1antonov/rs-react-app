@@ -1,38 +1,24 @@
 import ContentBox from './ContentBox';
-import Button from './Button';
-import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../store';
-import { callAction } from '../store/services/dispatch';
-import { starwarsApi, starwarsDetailApi } from '../store/services/starwars';
+import RefreshButton from './RefreshButton';
+import getPeople from './services/ApiSearch';
+import shouldThrow from './services/CreateError';
+import Loader from './Loader';
+import Pagination from './Pagination';
 
-const Content = () => {
-  const shouldThrow = useSelector((state: RootState) => state.shouldThrowReducer.shouldThrow);
-
-  if (shouldThrow) {
-    throw new Error('Error inside to Content');
-  }
-
-  const dispatch = useDispatch();
-  const handleResetCache = () => {
-    dispatch(starwarsApi.util.resetApiState());
-    dispatch(starwarsDetailApi.util.resetApiState());
-  };
-
-  const { toggleShouldThrow } = callAction(dispatch);
-
+export default async function Content({
+  searchParams,
+}: {
+  searchParams: { query?: string; page?: string };
+}) {
+  const data = await getPeople(searchParams?.query, searchParams?.page);
   return (
     <div>
-      <main className="results">
-        <ContentBox />
-      </main>
-      <Button className="create error" onClick={toggleShouldThrow} text="break the universe" />
-      <Button
-        className="reset_cache"
-        onClick={handleResetCache}
-        text="reset cache and reload data"
-      />
+      <main className="results">{data ? <ContentBox getPeople={data} /> : <Loader />}</main>
+      <button className="create error" onClick={shouldThrow}>
+        break the universe
+      </button>
+      <RefreshButton />
+      <Pagination count={data.count} />
     </div>
   );
-};
-
-export default Content;
+}

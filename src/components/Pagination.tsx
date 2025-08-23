@@ -1,34 +1,34 @@
-import { useNavigate } from 'react-router-dom';
-import Button from './Button';
-import { useSelector } from 'react-redux';
-import type { RootState } from '../store';
-import { callAction } from '../store/services/dispatch';
-import { useDispatch } from 'react-redux';
+'use client';
 
-const Pagination = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const pagination = useSelector((state: RootState) => state.paginationReducer.pagination);
-  const { setPage } = callAction(dispatch);
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
-  if (pagination > 1) {
-    const pages = Array.from({ length: pagination }, (_, i) => i + 1);
-    return (
-      <div className="pagination">
-        {pages.map((el) => (
-          <Button
-            key={el}
-            className="pagination_item"
-            text={String(el)}
-            onClick={() => {
-              setPage(el);
-              navigate(`/?page=${el}`);
-            }}
-          />
-        ))}
-      </div>
-    );
-  }
+const Pagination = ({ count }: { count: number }) => {
+  const [pages, setPages] = useState<number[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (count) {
+      const totalPages = Math.ceil(count / 10);
+      setPages(Array.from({ length: totalPages }, (_, i) => i + 1));
+    }
+  }, [count]);
+
+  const handleClick = (page: number) => {
+    router.push(`/?page=${page}`);
+  };
+
+  if (pages.length <= 1) return null;
+
+  return (
+    <div className="pagination">
+      {pages.map((el) => (
+        <button key={el} className="pagination_item" onClick={() => handleClick(el)}>
+          {el}
+        </button>
+      ))}
+    </div>
+  );
 };
 
 export default Pagination;
