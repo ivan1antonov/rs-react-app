@@ -1,6 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { ApiResponse, Person } from '../../types/types';
 
+interface IApiPayload {
+  search?: string;
+  page?: number;
+}  
+
 const api = {
   people: 'https://www.swapi.tech/api/people/',
   alternative: 'https://swapi.py4e.com/api/people/',
@@ -12,7 +17,7 @@ export const starwarsApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: api.alternative }),
   keepUnusedDataFor: 120,
   endpoints: (builder) => ({
-    getPersonStarWars: builder.query<ApiResponse, { search?: string; page?: number }>({
+    getPersonStarWars: builder.query<ApiResponse, IApiPayload>({
       query: ({ search, page }) => {
         const params = new URLSearchParams();
 
