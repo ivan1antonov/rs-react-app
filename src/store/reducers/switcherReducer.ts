@@ -1,11 +1,10 @@
 const TOGGLE_THEME = 'TOGGLE_THEME';
 
 const initState = {
-  isDark: true,
+  isDark: false,
 };
 
 export const switcherReducer = (state = initState, action: { type: string }) => {
-  console.log(state);
   switch (action.type) {
     case TOGGLE_THEME:
       return {

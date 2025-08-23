@@ -3,19 +3,19 @@ import Button from './Button';
 import Input from './Input';
 import { useNavigate } from 'react-router-dom';
 import type { RootState, AppDispatch } from '../store';
-import { callAction } from '../utils/dispatch';
-import { fetchResultsThunk } from '../store/thunks/thunk';
+import { callAction } from '../store/services/dispatch';
 import Switcher from './Switcher';
 
 const Header = () => {
-  const value = useSelector((state: RootState) => state.valueReducer.value);
+  const value = useSelector((state: RootState) => state.valueReducer);
   const dispatch = useDispatch<AppDispatch>();
 
-  const { setValue, clearValue } = callAction(dispatch);
+  const { setValue, clearValue, searchData } = callAction(dispatch);
   const navigate = useNavigate();
+
   function onSearch() {
     navigate('/');
-    dispatch(fetchResultsThunk({ query: 'all' }));
+    searchData(value);
     clearValue();
   }
 

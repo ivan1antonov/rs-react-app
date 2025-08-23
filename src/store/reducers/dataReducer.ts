@@ -1,30 +1,19 @@
-export type Item = {
-  id: number;
-  name: string;
-  height: string;
-  mass: string;
-  image: string;
-};
-
-export type DataState = Item[];
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type { Item } from '../../types/types';
 export type SelectedItem = Omit<Item, 'image'>;
 
-const SET_DATA = 'SET_DATA';
-const initState: DataState = [];
+const initialState: SelectedItem[] = [];
 
-export const dataReducer = (
-  state: DataState = initState,
-  action: { type: string; payload: DataState }
-): DataState => {
-  switch (action.type) {
-    case SET_DATA:
+const dataSlice = createSlice({
+  name: 'data',
+  initialState,
+  reducers: {
+    setData: (_state, action: PayloadAction<SelectedItem[]>) => {
       return action.payload;
-    default:
-      return state;
-  }
-};
-
-export const setData = (data: DataState) => ({
-  type: SET_DATA,
-  payload: data,
+    },
+  },
 });
+
+export const { setData } = dataSlice.actions;
+export default dataSlice.reducer;
