@@ -1,20 +1,16 @@
-const SWAPI_BASE_URL = 'https://swapi.py4e.com/api/people/';
+const SWAPI_BASE_URL = 'https://swapi.py4e.com/api/';
 
-type GetPeopleParams = {
-  query: string;
-};
-
-export const getResults = async (params: GetPeopleParams) => {
-  const url = new URL('/people', SWAPI_BASE_URL);
-  url.search = new URLSearchParams(params).toString();
+export const getResults = async (search: string) => {
+  const url = new URL('people/', SWAPI_BASE_URL);
+  url.search = new URLSearchParams({ search }).toString();
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url.toString());
     const data = await response.json();
-    localStorage.setItem('results', params.query);
-
+    localStorage.setItem('results', search);
     return data;
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };
