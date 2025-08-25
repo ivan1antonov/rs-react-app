@@ -8,13 +8,13 @@ const Pagination = ({ pagination }: { pagination: number }) => {
 
   return (
     <div className="pagination">
-      {pages.map((el) => (
+      {pages.map((pageNumber) => (
         <Button
-          key={el}
+          key={pageNumber}
           className="pagination_item"
-          text={String(el)}
+          text={String(pageNumber)}
           onClick={() => {
-            navigate(`/?page=${el}`);
+            navigate(`/?page=${pageNumber}`);
           }}
         />
       ))}

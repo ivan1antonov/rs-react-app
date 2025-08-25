@@ -1,4 +1,4 @@
-import notExits from '../assets/404.jpg';
+import notExits from '/404.jpg';
 
 const NotFound = () => {
   return (

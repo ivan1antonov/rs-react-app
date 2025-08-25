@@ -1,4 +1,4 @@
-import rsLogo from '../assets/logo-rsschool3.png';
+import rsLogo from '/logo-rsschool3.png';
 
 const About = () => {
   return (

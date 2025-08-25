@@ -1,24 +1,32 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import type { Person } from '../types/types';
+import type { PersonTransform } from '../types/types';
 import Button from '../components/Button';
+import { getPersonById } from '../services/services';
 
 const Details = () => {
   const { id } = useParams<{ id: string }>();
-  const [data, setData] = useState<Person>();
+  const [data, setData] = useState<PersonTransform>();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!id) return;
-    fetch(`https://swapi.py4e.com/api/people/${id}/`)
-      .then((res) => res.json())
-      .then(setData)
-      .finally(() => setLoading(false));
+    const fetchPerson = async () => {
+      if (!id) return;
+      try {
+        const person = await getPersonById(id);
+        setData(person);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPerson();
   }, [id]);
 
   if (!id) return null;
-  if (loading) return <div className="details">Загрузка...</div>;
+  if (loading) return <div className="details">Loading...</div>;
   if (!data) return null;
 
   return (
@@ -27,11 +35,11 @@ const Details = () => {
       <h3>{data.name}</h3>
       <p>Height: {data.height}</p>
       <p>Mass: {data.mass}</p>
-      <p>Hair color: {data.hair_color}</p>
-      <p>Skin color: {data.skin_color}</p>
-      <p>Eye color: {data.eye_color}</p>
+      <p>Hair color: {data.hairColor}</p>
+      <p>Skin color: {data.skinColor}</p>
+      <p>Eye color: {data.eyeColor}</p>
       <p>Gender: {data.gender}</p>
-      <p>Birth Year: {data.birth_year}</p>
+      <p>Birth Year: {data.birthYear}</p>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import './App.css';
 import Header from './components/Header';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import About from './pages/About.tsx';
-import logo from './assets/star-wars.svg';
+import logo from '/star-wars.svg';
 import Main from './pages/Main';
 import NotFound from './pages/NotFound.tsx';
 import { getResults } from './services/services';
@@ -20,11 +20,13 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   function getData(response: ApiResponse): void {
-    const results: resultsType[] = response.results.map((item) => ({
-      name: item.name,
-      text: `Height: ${item.height}, Gender: ${item.gender}, Hair Color: ${item.hair_color}, Birth Year: ${item.birth_year}`,
-      url: item.url,
-    }));
+    const results: resultsType[] = response.results.map(
+      ({ name, height, gender, hair_color, url, birth_year }) => ({
+        name: name,
+        text: `Height: ${height}, Gender: ${gender}, Hair Color: ${hair_color}, Birth Year: ${birth_year}`,
+        url: url,
+      })
+    );
     setData(results);
   }
 

@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">16% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>4/25</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>2/2</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class='fraction'>0/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">16% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/14</span>
+                <span class='fraction'>4/25</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -79,38 +79,80 @@
 <a name='L14'></a><a href='#L14'>14</a>
 <a name='L15'></a><a href='#L15'>15</a>
 <a name='L16'></a><a href='#L16'>16</a>
-<a name='L17'></a><a href='#L17'>17</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const api = {
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import type { Person } from '../types/types';
+&nbsp;
+const api = {
   people: 'https://swapi.py4e.com/api/people/',
-  planets: 'https://swapi.py4e.com/api/planets/',
-  films: 'https://swapi.py4e.com/api/films/',
-  species: 'https://swapi.py4e.com/api/species/',
-  vehicles: 'https://swapi.py4e.com/api/vehicles/',
-  starships: 'https://swapi.py4e.com/api/starships/',
 };
 &nbsp;
-export async function getResults(query: string, page: number = 1) {
-  const response = await fetch(api.people + `?search=${query}` + `&amp;page=${page}`);
-  const data = await response.json();
-  localStorage.setItem('results', query);
-  // console.log(data);
-  return data;
-}
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >export async function getResults(query: string, page: number = 1) {</span></span>
+<span class="cstat-no" title="statement not covered" >  const res = await fetch(api.people + `?search=${query}` + `&amp;page=${page}`);</span>
+<span class="cstat-no" title="statement not covered" >  if (!res.ok) throw new Error(`Error fetching search`);</span>
+<span class="cstat-no" title="statement not covered" >  const data = await res.json();</span>
+<span class="cstat-no" title="statement not covered" >  localStorage.setItem('results', query);</span>
+<span class="cstat-no" title="statement not covered" >  return data;</span>
+<span class="cstat-no" title="statement not covered" >}</span>
+&nbsp;
+export const getPersonById = <span class="fstat-no" title="function not covered" >async (id: string) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  const res = await fetch(`https://swapi.py4e.com/api/people/${id}/`);</span>
+<span class="cstat-no" title="statement not covered" >  if (!res.ok) throw new Error(`Error fetching person ${id}`);</span>
+<span class="cstat-no" title="statement not covered" >  const data: Person = await res.json();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return {</span>
+<span class="cstat-no" title="statement not covered" >    name: data.name,</span>
+<span class="cstat-no" title="statement not covered" >    height: data.height,</span>
+<span class="cstat-no" title="statement not covered" >    mass: data.mass,</span>
+<span class="cstat-no" title="statement not covered" >    hairColor: data.hair_color,</span>
+<span class="cstat-no" title="statement not covered" >    skinColor: data.skin_color,</span>
+<span class="cstat-no" title="statement not covered" >    eyeColor: data.eye_color,</span>
+<span class="cstat-no" title="statement not covered" >    gender: data.gender,</span>
+<span class="cstat-no" title="statement not covered" >    birthYear: data.birth_year,</span>
+<span class="cstat-no" title="statement not covered" >  };</span>
+<span class="cstat-no" title="statement not covered" >};</span>
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -118,7 +160,7 @@ export async function getResults(query: string, page: number = 1) {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-07-29T20:21:34.548Z
+                at 2025-08-25T12:19:26.230Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

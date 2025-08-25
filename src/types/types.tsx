@@ -47,6 +47,17 @@ export interface Person {
   url: string;
 }
 
+export interface PersonTransform {
+  name: string;
+  height: string;
+  mass: string;
+  hairColor: string;
+  skinColor: string;
+  eyeColor: string;
+  gender: string;
+  birthYear: string;
+}
+
 export interface ApiResponse {
   count: number;
   next: string | null;
