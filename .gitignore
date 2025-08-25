@@ -8,7 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-coverage/
+coverage
+.next
 dist
 dist-ssr
 *.local
