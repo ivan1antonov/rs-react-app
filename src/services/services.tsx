@@ -1,15 +1,16 @@
-const api = {
-  people: 'https://swapi.py4e.com/api/people/',
-  planets: 'https://swapi.py4e.com/api/planets/',
-  films: 'https://swapi.py4e.com/api/films/',
-  species: 'https://swapi.py4e.com/api/species/',
-  vehicles: 'https://swapi.py4e.com/api/vehicles/',
-  starships: 'https://swapi.py4e.com/api/starships/',
-};
+const SWAPI_BASE_URL = 'https://swapi.py4e.com/api/';
 
-export async function getResults(query: string) {
-  const response = await fetch(api.people + `?search=${query}`);
-  const data = await response.json();
-  localStorage.setItem('results', query);
-  return data;
-}
+export const getResults = async (search: string) => {
+  const url = new URL('people/', SWAPI_BASE_URL);
+  url.search = new URLSearchParams({ search }).toString();
+
+  try {
+    const response = await fetch(url.toString());
+    const data = await response.json();
+    localStorage.setItem('results', search);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

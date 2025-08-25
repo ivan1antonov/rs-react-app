@@ -12,13 +12,17 @@ export default class App extends React.Component<object, AppState> {
     super(props);
     this.state = { data: [], inputValue: '', shouldThrow: false, isLoading: true };
   }
+
   getData(response: ApiResponse): void {
-    const results: resultsType[] = response.results.map((item) => ({
-      name: item.name,
-      text: `Height: ${item.height}, Gender: ${item.gender}, Hair Color: ${item.hair_color}, Birth Year: ${item.birth_year}`,
-    }));
+    const results: resultsType[] = response.results.map(
+      ({ name, height, gender, hair_color, birth_year }) => ({
+        name: name,
+        text: `Height: ${height}, Gender: ${gender}, Hair Color: ${hair_color}, Birth Year: ${birth_year}`,
+      })
+    );
     this.setState({ data: results });
   }
+
   async componentDidMount() {
     this.setState({ isLoading: true });
     const prevSearch = localStorage.getItem('results');
@@ -34,6 +38,7 @@ export default class App extends React.Component<object, AppState> {
       }
     }
   }
+
   async getNewData(value: string) {
     this.setState({ isLoading: true });
     try {
@@ -43,9 +48,11 @@ export default class App extends React.Component<object, AppState> {
       this.setState({ isLoading: false });
     }
   }
+
   newValue(value: string) {
     this.setState({ inputValue: value });
   }
+
   onSearch() {
     if (localStorage.getItem('results') === this.state.inputValue.trim()) {
       return;
@@ -53,6 +60,7 @@ export default class App extends React.Component<object, AppState> {
     this.getNewData(this.state.inputValue.trim());
     this.setState({ inputValue: '' });
   }
+
   createError = () => {
     this.setState({ shouldThrow: true });
   };
