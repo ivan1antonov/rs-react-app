@@ -30,7 +30,6 @@ const Main = ({ data, shouldThrow, createError, isLoading, pagination, getNewDat
     if (!url) return;
     const id = url.split('/').filter(Boolean).pop();
     navigate(`/details/${id}`);
-    // console.log(id);
   };
 
   return isLoading ? (
